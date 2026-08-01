@@ -1,1 +1,62 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Roboto:wght@400;500;600&display=swap');
+
+:root {
+  --color-primary: #f82ba9;
+  --color-heading: #160e4b;
+  --color-white: #ffffff;
+  --color-border: #f1f1f1;
+  --color-surface: #ffffff;
+  --font-body: 'Roboto', Arial, sans-serif;
+  --font-brand: 'Alex Brush', cursive;
+  --page-max-width: 1440px;
+  --page-padding: 80px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-surface);
+  color: var(--color-heading);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a {
+  color: inherit;
+  font: inherit;
+}
+
+button {
+  border: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --page-padding: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-padding: 16px;
+  }
+}

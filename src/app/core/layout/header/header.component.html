@@ -1,0 +1,94 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a
+      class="site-header__brand"
+      routerLink="/"
+      aria-label="Rose home"
+      (click)="closeMenu()"
+    >
+      <img src="assets/brand/rose-logo.png" alt="Rose Happy Gift" />
+      <span class="brand-copy" aria-hidden="true">
+        <span class="brand-copy__name">Rose</span>
+        <span class="brand-copy__tagline">Happy Gift</span>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+        >Home</a
+      >
+      <a class="nav-link" routerLink="/category">All Category</a>
+      <a class="nav-link" routerLink="/" fragment="about">About</a>
+      <a class="nav-link" routerLink="/" fragment="contact">Contact</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <button
+        class="icon-button"
+        type="button"
+        aria-label="Open search"
+        title="Search will be added in its milestone"
+        disabled
+      >
+        <img src="assets/icons/search.svg" alt="" aria-hidden="true" />
+      </button>
+
+      <button
+        class="login-button"
+        type="button"
+        title="Login will be added in its milestone"
+        disabled
+      >
+        Login
+      </button>
+
+      <button
+        class="menu-button"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-controls="mobile-navigation"
+        [attr.aria-expanded]="isMenuOpen()"
+        (click)="toggleMenu()"
+      >
+        <img src="assets/icons/menu.svg" alt="" aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+
+  @if (isMenuOpen()) {
+    <nav
+      id="mobile-navigation"
+      class="mobile-nav"
+      aria-label="Mobile navigation"
+    > 
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="nav-link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+        (click)="closeMenu()"
+        >Home</a
+      >
+      <a class="nav-link" routerLink="/category" (click)="closeMenu()">
+        All Category
+      </a>
+      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenu()">
+        About
+      </a>
+      <a
+        class="nav-link"
+        routerLink="/"
+        fragment="contact"
+        (click)="closeMenu()"
+      >
+        Contact
+      </a>
+    </nav>
+  }
+</header>
