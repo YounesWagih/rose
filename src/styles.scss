@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Roboto:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inter:wght@400;500;600&family=Roboto:wght@400;500;600&display=swap');
 
 :root {
   --color-primary: #f82ba9;
@@ -8,6 +8,7 @@
   --color-surface: #ffffff;
   --font-body: 'Roboto', Arial, sans-serif;
   --font-brand: 'Alex Brush', cursive;
+  --font-ui: 'Inter', Arial, sans-serif;
   --page-max-width: 1440px;
   --page-padding: 80px;
 }

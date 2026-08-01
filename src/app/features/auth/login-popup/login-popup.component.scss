@@ -1,0 +1,211 @@
+:host {
+  font-family: var(--font-ui);
+}
+
+.login-overlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 80%);
+  padding: 16px;
+}
+
+.login-form {
+  display: flex;
+  width: min(608px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  border-radius: 20px;
+  background: var(--color-white);
+  box-shadow: 0 4px 15px rgb(0 0 0 / 5%);
+  color: #313131;
+  padding: 40px;
+}
+
+h2 {
+  width: 100%;
+  margin: 0;
+  color: #000000;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
+  text-transform: capitalize;
+}
+
+.form-fields {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.form-field input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  background: var(--color-white);
+  box-shadow: 0 1px 5px rgb(0 0 0 / 10%);
+  color: #313131;
+  font: inherit;
+  font-size: 16px;
+  line-height: 36px;
+  outline: 0;
+  padding: 7px 8px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.form-field input::placeholder {
+  color: #797979;
+  opacity: 1;
+}
+
+.form-field input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgb(248 43 169 / 15%);
+}
+
+.form-field input.ng-invalid.ng-touched {
+  border-color: #c62828;
+}
+
+.field-error,
+.submit-error {
+  margin: 8px 8px 0;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.login-options {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.remember-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.remember-option input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--color-primary);
+}
+
+.text-action {
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.text-action:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.create-account {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.submit-error {
+  width: 100%;
+  margin: -16px 0;
+  border-radius: 10px;
+  background: #fef3f2;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.submit-button {
+  width: 100%;
+  min-height: 50px;
+  border-radius: 30px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 50px;
+  padding-inline: 31px;
+}
+
+.submit-button:focus-visible,
+.text-action:focus-visible,
+.remember-option input:focus-visible {
+  outline: 3px solid rgb(248 43 169 / 35%);
+  outline-offset: 3px;
+}
+
+.submit-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .login-form {
+    width: min(343px, 100%);
+    max-height: calc(100dvh - 24px);
+    gap: 24px;
+    padding: 24px 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .form-fields {
+    gap: 18px;
+  }
+
+  .login-options {
+    padding-inline: 0;
+  }
+
+  .create-account {
+    text-align: center;
+  }
+}
+
+@media (max-width: 359px) {
+  .login-options {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+}

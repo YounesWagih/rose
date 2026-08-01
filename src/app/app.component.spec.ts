@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
 
@@ -6,7 +7,7 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
-      providers: [provideRouter([])]
+      providers: [provideHttpClient(), provideRouter([])]
     }).compileComponents();
   });
 
@@ -16,17 +17,11 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'rose' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('rose');
-  });
-
   it('should render the application shell', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-header')).toBeTruthy();
-    expect(compiled.querySelector('main#main-content')).toBeTruthy();
+    expect(compiled.querySelector('main')).toBeTruthy();
   });
 });

@@ -1,0 +1,81 @@
+<div class="login-overlay" (click)="close()">
+  <form
+    class="login-form"
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    (click)="$event.stopPropagation()"
+    novalidate
+  >
+    <h2>Login to your account</h2>
+
+    <div class="form-fields">
+      <div class="form-field">
+        <label class="visually-hidden" for="login-email">Email</label>
+        <input
+          id="login-email"
+          type="email"
+          inputmode="email"
+          autocomplete="email"
+          placeholder="Email"
+          formControlName="email"
+          autofocus
+        />
+        @if (form.controls.email.touched && form.controls.email.hasError('required')) {
+          <p class="field-error">Email is required.</p>
+        } @else if (form.controls.email.touched && form.controls.email.hasError('email')) {
+          <p class="field-error">Enter a valid email address.</p>
+        }
+      </div>
+
+      <div class="form-field">
+        <label class="visually-hidden" for="login-password">Password</label>
+        <input
+          id="login-password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        @if (form.controls.password.touched && form.controls.password.invalid) {
+          <p class="field-error">Password is required.</p>
+        }
+      </div>
+    </div>
+
+    <div class="login-options">
+      <label class="remember-option">
+        <input type="checkbox" formControlName="remember" />
+        <span>Remind me</span>
+      </label>
+
+      <button
+        class="text-action"
+        type="button"
+        disabled
+        title="Password recovery is outside this project scope"
+      >
+        Forgot Password
+      </button>
+    </div>
+
+    <p class="create-account">
+      No account?
+      <button
+        class="text-action"
+        type="button"
+        disabled
+        title="Registration is outside this project scope"
+      >
+        Create one here
+      </button>
+    </p>
+
+    @if (submitError()) {
+      <p class="submit-error" role="alert">{{ submitError() }}</p>
+    }
+
+    <button class="submit-button" type="submit" [disabled]="isSubmitting()">
+      {{ isSubmitting() ? 'Logging in…' : 'Login' }}
+    </button>
+  </form>
+</div>

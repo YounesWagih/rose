@@ -1,5 +1,12 @@
-import { Component, HostListener, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+  signal
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,18 +15,35 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  readonly auth = inject(AuthService);
+
+  @Output() readonly loginRequested = new EventEmitter<void>();
+
   readonly isMenuOpen = signal(false);
+  readonly isUserMenuOpen = signal(false);
+
+  openLogin(): void {
+    this.closeMenus();
+    this.loginRequested.emit();
+  }
 
   toggleMenu(): void {
+    this.isUserMenuOpen.set(false);
     this.isMenuOpen.update((isOpen) => !isOpen);
   }
 
-  closeMenu(): void {
+  toggleUserMenu(): void {
     this.isMenuOpen.set(false);
+    this.isUserMenuOpen.update((isOpen) => !isOpen);
   }
 
-  @HostListener('document:keydown.escape')
-  closeMenuOnEscape(): void {
-    this.closeMenu();
+  closeMenus(): void {
+    this.isMenuOpen.set(false);
+    this.isUserMenuOpen.set(false);
+  }
+
+  logout(): void {
+    this.closeMenus();
+    this.auth.logout();
   }
 }

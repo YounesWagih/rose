@@ -4,7 +4,7 @@
       class="site-header__brand"
       routerLink="/"
       aria-label="Rose home"
-      (click)="closeMenu()"
+      (click)="closeMenus()"
     >
       <img src="assets/brand/rose-logo.png" alt="Rose Happy Gift" />
       <span class="brand-copy" aria-hidden="true">
@@ -35,17 +35,31 @@
         title="Search will be added in its milestone"
         disabled
       >
-        <img src="assets/icons/search.svg" alt="" aria-hidden="true" />
+        <img src="assets/icons/search.svg" alt="" />
       </button>
 
-      <button
-        class="login-button"
-        type="button"
-        title="Login will be added in its milestone"
-        disabled
-      >
-        Login
-      </button>
+      @if (auth.isAuthenticated()) {
+        <button class="icon-button" type="button" aria-label="Open wishlist" title="Wishlist will be added in its milestone" disabled>
+          <img src="assets/icons/wishlist.svg" alt="" />
+        </button>
+        <button class="icon-button" type="button" aria-label="Open shopping bag" title="Cart will be added in its milestone" disabled>
+          <img src="assets/icons/shopping-bag.svg" alt="" />
+        </button>
+        <button class="icon-button user-button" type="button" aria-label="Open account menu" aria-controls="account-menu" [attr.aria-expanded]="isUserMenuOpen()" (click)="toggleUserMenu()">
+          <img src="assets/icons/user.svg" alt="" />
+        </button>
+        @if (isUserMenuOpen()) {
+          <div id="account-menu" class="account-menu">
+            <p class="account-menu__name">
+              {{ auth.user()?.firstName }} {{ auth.user()?.lastName }}
+            </p>
+            <p class="account-menu__email">{{ auth.user()?.email }}</p>
+            <button type="button" (click)="logout()">Logout</button>
+          </div>
+        }
+      } @else {
+        <button class="login-button" type="button" (click)="openLogin()">Login</button>
+      }
 
       <button
         class="menu-button"
@@ -55,7 +69,7 @@
         [attr.aria-expanded]="isMenuOpen()"
         (click)="toggleMenu()"
       >
-        <img src="assets/icons/menu.svg" alt="" aria-hidden="true" />
+        <img src="assets/icons/menu.svg" alt="" />
       </button>
     </div>
   </div>
@@ -72,20 +86,20 @@
         routerLinkActive="nav-link--active"
         [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
-        (click)="closeMenu()"
+        (click)="closeMenus()"
         >Home</a
       >
-      <a class="nav-link" routerLink="/category" (click)="closeMenu()">
+      <a class="nav-link" routerLink="/category" (click)="closeMenus()">
         All Category
       </a>
-      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenu()">
+      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenus()">
         About
       </a>
       <a
         class="nav-link"
         routerLink="/"
         fragment="contact"
-        (click)="closeMenu()"
+        (click)="closeMenus()"
       >
         Contact
       </a>

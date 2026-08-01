@@ -1,7 +1,9 @@
-<a class="skip-link" href="#main-content">Skip to main content</a>
+<app-header (loginRequested)="isLoginOpen = true" />
 
-<app-header />
-
-<main id="main-content">
+<main>
   <router-outlet />
 </main>
+
+@if (isLoginOpen) {
+  <app-login-popup (closed)="isLoginOpen = false" />
+}
