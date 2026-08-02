@@ -8,3 +8,7 @@ export interface Category {
 export interface CategoriesResponse {
   categories: Category[];
 }
+
+export interface CategoryResponse {
+  category: Category;
+}

@@ -1,0 +1,124 @@
+<section class="product-details home-container">
+  @if (product(); as productData) {
+    <div class="product-overview">
+      <div class="product-gallery">
+        <div class="product-gallery__main">
+          <img [src]="selectedImage()" [alt]="productData.title" />
+        </div>
+
+        <div class="product-gallery__thumbnails">
+          @for (image of productImages(); track image) {
+            <button
+              type="button"
+              [class.active]="selectedImage() === image"
+              (click)="selectImage(image)"
+            >
+              <img [src]="image" [alt]="productData.title" />
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h1>{{ productData.title }}</h1>
+
+        <div class="product-price">
+          @if (hasDiscount(productData)) {
+            <del>{{ productData.price | currency }}</del>
+          }
+          <strong>{{ currentPrice(productData) | currency }}</strong>
+          @if (hasDiscount(productData)) {
+            <span>{{ productData.discount }}% Off</span>
+          }
+        </div>
+
+        <p class="product-description">{{ productData.description }}</p>
+
+        <div class="product-options">
+          <div class="product-option">
+            <h2>Quantity</h2>
+            <div class="quantity-control">
+              <button
+                type="button"
+                [disabled]="quantity === 1"
+                (click)="decreaseQuantity()"
+              >
+                <img src="assets/product-details/minus.svg" alt="" />
+              </button>
+              <span>{{ quantity }}</span>
+              <button
+                type="button"
+                [disabled]="productData.quantity <= 0 || quantity === productData.quantity"
+                (click)="increaseQuantity()"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div class="product-option size-option">
+            <h2>Size</h2>
+            <select disabled>
+              <option>Not available</option>
+            </select>
+          </div>
+
+          <div class="product-option color-option">
+            <h2>Color</h2>
+            <div class="color-list" title="Color data is not available in the API">
+              @for (color of colors; track color) {
+                <button type="button" disabled [style.background]="color"></button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <ul class="product-meta">
+          <li><strong>Stock:</strong> {{ productData.quantity > 0 ? 'Available' : 'Out of stock' }}</li>
+          <li><strong>Product ID:</strong> {{ productData._id }}</li>
+          <li><strong>Category:</strong> {{ categoryName() }}</li>
+          <li><strong>Sold:</strong> {{ productData.sold ?? 0 }}</li>
+          <li><strong>Rating:</strong> {{ productData.rateAvg }} / 5</li>
+        </ul>
+
+        <div class="product-actions">
+          <button
+            class="add-to-cart"
+            type="button"
+            [disabled]="productData.quantity <= 0"
+          >
+            <img src="assets/product-details/cart.svg" alt="" />
+            Add To Cart
+          </button>
+          <button class="add-to-wishlist" type="button" title="Add to wishlist">
+            <img src="assets/product-details/heart.svg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <section class="related-products">
+      <header class="related-products__header">
+        <h2>Related Items</h2>
+        <a routerLink="/category">
+          View More
+          <img src="assets/product-details/view-more-arrow.svg" alt="" />
+        </a>
+      </header>
+
+      @if (relatedProducts().length > 0) {
+        <div class="related-products__grid">
+          @for (relatedProduct of relatedProducts(); track relatedProduct._id) {
+            <app-product-card [product]="relatedProduct" />
+          }
+        </div>
+      } @else {
+        <p class="page-message">No related products found.</p>
+      }
+    </section>
+  } @else if (errorMessage()) {
+    <p class="page-message">{{ errorMessage() }}</p>
+  } @else {
+    <p class="page-message">Loading product...</p>
+  }
+</section>

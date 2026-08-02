@@ -16,6 +16,7 @@ import { ProductService } from '../../core/services/product.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { Category } from '../../shared/models/category.model';
 import { Product, ProductFilters } from '../../shared/models/product.model';
+import { hasProductDiscount } from '../../shared/utils/product-price.util';
 
 @Component({
   selector: 'app-category',
@@ -89,7 +90,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   getFilteredProducts() {
     return this.products().filter((product) => {
       const needsValidDiscount = this.selectedSales.has('discount');
-      return !needsValidDiscount || this.hasValidDiscount(product);
+      return !needsValidDiscount || hasProductDiscount(product);
     });
   }
 
@@ -149,13 +150,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if (filter === 'sale') return product.discount > 0;
     if (filter === 'stock') return product.quantity > 0;
     if (filter === 'out') return product.quantity <= 0;
-    return this.hasValidDiscount(product);
-  }
-
-  private hasValidDiscount(product: Product) {
-    return product.discount > 0 &&
-      product.priceAfterDiscount > 0 &&
-      product.priceAfterDiscount < product.price;
+    return hasProductDiscount(product);
   }
 
   private getApiFilters(): ProductFilters {

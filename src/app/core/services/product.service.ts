@@ -1,6 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ProductFilters, ProductsResponse } from '../../shared/models/product.model';
+import {
+  ProductDetailsResponse,
+  ProductFilters,
+  ProductsResponse
+} from '../../shared/models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -51,5 +55,9 @@ export class ProductService {
     params = params.set('limit', filters.limit ?? 50);
 
     return this.http.get<ProductsResponse>(this.apiUrl, { params });
+  }
+
+  getProductById(id: string) {
+    return this.http.get<ProductDetailsResponse>(`${this.apiUrl}/${id}`);
   }
 }

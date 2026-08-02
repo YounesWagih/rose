@@ -4,12 +4,16 @@
 
     @if (product.quantity <= 0) {
       <span class="product-card__stock">Out of stock</span>
-    } @else if (product.discount > 0 && hasDiscount()) {
+    } @else if (product.discount > 0 && hasDiscount(product)) {
       <span class="product-card__discount">-{{ product.discount }}%</span>
     }
 
     <div class="product-card__actions">
-      <button type="button" title="Product details">
+      <button
+        type="button"
+        title="Product details"
+        [routerLink]="['/product', product._id]"
+      >
         <img src="assets/icons/product-eye.svg" alt="" />
       </button>
       <button type="button" title="Add to wishlist">
@@ -30,8 +34,8 @@
         </div>
 
         <p class="product-card__price">
-          <span>{{ currentPrice() | currency }}</span>
-          @if (hasDiscount()) {
+          <span>{{ currentPrice(product) | currency }}</span>
+          @if (hasDiscount(product)) {
             <del>{{ product.price | currency }}</del>
           }
         </p>

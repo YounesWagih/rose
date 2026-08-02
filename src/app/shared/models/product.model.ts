@@ -1,18 +1,26 @@
 export interface Product {
   _id: string;
   title: string;
+  slug: string;
+  description: string;
   imgCover: string;
+  images: string[];
   price: number;
   priceAfterDiscount: number;
   discount: number;
   rateAvg: number;
   quantity: number;
   category: string;
+  occasion: string;
   sold?: number;
 }
 
 export interface ProductsResponse {
   products: Product[];
+}
+
+export interface ProductDetailsResponse {
+  product: Product;
 }
 
 export interface ProductFilters {
