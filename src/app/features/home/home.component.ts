@@ -28,6 +28,16 @@ export class HomeComponent implements OnInit {
   ];
   currentBanner = 0;
   premiumStart = 0;
+  reviewStart = 0;
+
+  reviews = [
+    { name: 'Ahmed Mohamed', role: 'Customer', image: 'assets/home/reviews/review-avatar-1.png' },
+    { name: 'Ahmed Mohamed', role: 'Customer', image: 'assets/home/reviews/review-avatar-2.png' },
+    { name: 'Ahmed Mohamed', role: 'Customer', image: 'assets/home/reviews/review-avatar-3.png' },
+    { name: 'Ahmed Mohamed', role: 'Customer', image: 'assets/home/reviews/review-avatar-4.png' }
+  ];
+
+  trustedCompanies = [1, 2, 3, 4, 5, 6];
 
   ngOnInit() {
     this.loadCategories();
@@ -81,6 +91,28 @@ export class HomeComponent implements OnInit {
 
     if (this.premiumStart === this.products().length) {
       this.premiumStart = 0;
+    }
+  }
+
+  getReviews() {
+    return this.reviews.map((_, index) =>
+      this.reviews[(this.reviewStart + index) % this.reviews.length]
+    );
+  }
+
+  showPreviousReviews() {
+    this.reviewStart--;
+
+    if (this.reviewStart < 0) {
+      this.reviewStart = this.reviews.length - 1;
+    }
+  }
+
+  showNextReviews() {
+    this.reviewStart++;
+
+    if (this.reviewStart === this.reviews.length) {
+      this.reviewStart = 0;
     }
   }
 

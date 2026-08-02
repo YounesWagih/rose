@@ -162,4 +162,105 @@
       </div>
     </section>
   }
+
+  <section id="about" class="about home-container">
+    <div class="about__photos">
+      <div class="about__main-photo">
+        <img src="assets/home/about/about-main.png" alt="Purple gift box" />
+      </div>
+      <div class="about__small-photos">
+        <img src="assets/home/about/about-top.png" alt="Orange gift boxes" />
+        <img src="assets/home/about/about-bottom.png" alt="Small gift beneath balloons" />
+      </div>
+    </div>
+
+    <div class="about__content">
+      <p class="eyebrow">ABOUT US</p>
+      <h2>
+        We Provide Best And Quality <span>Gifts</span><br />
+        <span>Box</span> Product For You
+      </h2>
+      <p class="about__description">
+        Recusandae tempora aut laborum molestias veniam. A commodi sequi
+        accusantium ullam cupiditate. Neque quidem qui et autem dolor dicta
+        necessitatibus ut ad.
+      </p>
+      <a class="shop-button" href="#popular">
+        Discover More
+        <img src="assets/home/about/about-arrow.svg" alt="" />
+      </a>
+
+      <div class="about__features">
+        <p><img src="assets/home/about/about-check.svg" alt="" /> Streamlined Shipping Experience</p>
+        <p><img src="assets/home/about/about-check.svg" alt="" /> Affordable Modern Design</p>
+        <p><img src="assets/home/about/about-check.svg" alt="" /> Competitive Price & Easy To Shop</p>
+        <p><img src="assets/home/about/about-check.svg" alt="" /> We Made Awesome Products</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery home-container">
+    <div class="gallery__heading">
+      <p class="eyebrow">OUR GALLERY</p>
+      <h2 class="section-title">Let's Check Our Photo Gallery</h2>
+    </div>
+    <div class="gallery__grid">
+      <img src="assets/home/gallery/gallery-1.png" alt="Giving a wrapped gift" />
+      <img src="assets/home/gallery/gallery-2.png" alt="People wrapping gifts" />
+      <img src="assets/home/gallery/gallery-3.jpg" alt="Decorative gift boxes" />
+      <img class="gallery__wide" src="assets/home/gallery/gallery-4.png" alt="Family wrapping gifts" />
+      <img src="assets/home/gallery/gallery-5.png" alt="Black gift box on red background" />
+    </div>
+  </section>
+
+  <section class="reviews">
+    <img class="reviews__background" src="assets/home/reviews/reviews-bg.png" alt="" />
+    <div class="reviews__content home-container">
+      <button class="reviews__arrow" type="button" (click)="showPreviousReviews()">
+        <img src="assets/home/reviews/review-prev.svg" alt="Previous reviews" />
+      </button>
+
+      <div class="reviews__grid">
+        @for (review of getReviews(); track review.image) {
+          <article class="review-card">
+            <div class="review-card__person">
+              <div class="review-card__avatar">
+                <img [src]="review.image" [alt]="review.name" />
+              </div>
+              <div>
+                <h3>{{ review.name }}</h3>
+                <p>{{ review.role }}</p>
+              </div>
+            </div>
+            <p class="review-card__text">
+              Ab Vel Consequatur Repellat Eos Omnis Accusamus Porro Sunt
+              Dolorem. Totam Voluptas Ullam Ut. Neque Accusantium Voluptas
+              Rerum. Dolorem Veritatis Quo Omnis Nihil Nulla Harum Eum.
+              Dignissimos Laborum Necessitatibus Vero Nihil.
+            </p>
+            <div class="review-card__stars">
+              @for (star of [1, 2, 3, 4]; track star) {
+                <img src="assets/home/reviews/review-star.svg" alt="" />
+              }
+            </div>
+            <img class="review-card__chat" src="assets/home/reviews/review-chat.svg" alt="" />
+          </article>
+        }
+      </div>
+
+      <button class="reviews__arrow" type="button" (click)="showNextReviews()">
+        <img src="assets/home/reviews/review-next.svg" alt="Next reviews" />
+      </button>
+    </div>
+    <img class="reviews__dots" src="assets/home/reviews/review-dots.svg" alt="" />
+  </section>
+
+  <section class="trusted home-container">
+    <h2 class="section-title">Trusted By Over <span>4.5k+</span> Companies</h2>
+    <div class="trusted__logos">
+      @for (company of trustedCompanies; track company) {
+        <img [src]="'assets/home/trusted/trusted-' + company + '.png'" [alt]="'Trusted company ' + company" />
+      }
+    </div>
+  </section>
 </div>

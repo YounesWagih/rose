@@ -4,6 +4,8 @@
   <router-outlet />
 </main>
 
+<app-footer />
+
 @if (isLoginOpen) {
   <app-login-popup (closed)="isLoginOpen = false" />
 }
