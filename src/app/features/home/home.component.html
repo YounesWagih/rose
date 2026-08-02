@@ -1,3 +1,165 @@
-<section class="home">
-  <h1>Rose flower shop</h1>
-</section>
+<div class="home">
+  <section class="categories home-container">
+    @for (category of categories(); track category._id) {
+      <article class="category-card">
+        <div class="category-card__image">
+          <img [src]="category.image" [alt]="category.name" />
+        </div>
+        <div class="category-card__text">
+          <h2>{{ category.name }}</h2>
+          <p>{{ category.productsCount }} Items</p>
+        </div>
+      </article>
+    }
+  </section>
+
+  <section class="hero home-container">
+    <article class="side-offer">
+      <img class="side-offer__background" src="assets/home/side-gifts.png" alt="Red gift boxes" />
+      <div class="side-offer__copy">
+        <p>START $10.99</p>
+        <h1>Special Gifts Box For Your Love</h1>
+        <a class="shop-button" href="#popular">
+          Shop Now
+          <img src="assets/home/arrow-right.svg" alt="" />
+        </a>
+      </div>
+    </article>
+
+    <article class="hero-banner">
+      <img [src]="heroBanners[currentBanner]" alt="Rose gift shop banner" />
+      <div class="hero-banner__copy">
+        <p>BEST GIFT SHOP</p>
+        <h2>Choose Perfect <span>Gifts</span> From Us</h2>
+        <p class="hero-banner__description">
+          Culpa ducimus nesciunt aliquam non rerum esse recusandae omnis.
+          Rerum optio dolores et.
+        </p>
+        <a class="shop-button" href="#popular">
+          Shop Now
+          <img src="assets/home/arrow-right.svg" alt="" />
+        </a>
+      </div>
+      <div class="hero-banner__dots">
+        @for (banner of heroBanners; track banner; let index = $index) {
+          <button
+            type="button"
+            [class.active]="index === currentBanner"
+            (click)="showBanner(index)"
+          ></button>
+        }
+      </div>
+      <div class="hero-banner__arrows">
+        <button type="button" (click)="showPreviousBanner()">
+          <img src="assets/home/arrow-left.svg" alt="Previous banner" />
+        </button>
+        <button type="button" (click)="showNextBanner()">
+          <img src="assets/home/arrow-next.svg" alt="Next banner" />
+        </button>
+      </div>
+    </article>
+  </section>
+
+  <section class="promotions home-container">
+    <article class="promotion promotion--gift">
+      <img src="assets/home/promo-gift-box.png" alt="Wrapped gift box" />
+      <div>
+        <p>Gifts Box</p>
+        <h2>Awesome Gifts Box Collections</h2>
+        <a class="shop-button" href="#popular">Shop Now</a>
+      </div>
+    </article>
+    <article class="promotion promotion--flowers">
+      <img src="assets/home/promo-flowers.png" alt="Gift box held in two hands" />
+      <div>
+        <p>Occasion Gifts</p>
+        <h2>Best Occasion Gifts Collections</h2>
+        <a class="shop-button" href="#popular">Discover Now</a>
+      </div>
+    </article>
+    <article class="promotion promotion--jewelry">
+      <img src="assets/home/promo-jewelry.png" alt="Christmas gift boxes" />
+      <div>
+        <p>Occasion Gifts</p>
+        <h2>Combo Sets Gift Box Up To 50% Off</h2>
+        <a class="shop-button" href="#popular">Discover Now</a>
+      </div>
+    </article>
+  </section>
+
+  <section class="benefits home-container">
+    <article>
+      <span><img src="assets/home/delivery.svg" alt="" /></span>
+      <div><h2>Free Delivery</h2><p>Orders Over $120</p></div>
+    </article>
+    <article>
+      <span><img src="assets/home/refund.svg" alt="" /></span>
+      <div><h2>Get Refund</h2><p>Within 30 Days Returns</p></div>
+    </article>
+    <article>
+      <span><img src="assets/home/payment.svg" alt="" /></span>
+      <div><h2>Safe Payment</h2><p>100% Secure Payment</p></div>
+    </article>
+    <article>
+      <span><img src="assets/home/support.svg" alt="" /></span>
+      <div><h2>24/7 Support</h2><p>Feel Free To Call Us</p></div>
+    </article>
+  </section>
+
+  @if (errorMessage()) {
+    <p class="home-message home-container">{{ errorMessage() }}</p>
+  } @else if (isLoading()) {
+    <p class="home-message home-container">Loading products...</p>
+  } @else if (products().length === 0) {
+    <p class="home-message home-container">No products available right now.</p>
+  } @else {
+    <section class="premium home-container">
+      <div class="premium__intro">
+        <p class="eyebrow">PREMIUM GIFTS</p>
+        <h2>Best <span>Seller<br />Gifts</span> And Products</h2>
+        <p class="premium__description">
+          Recusandae tempora aut laborum molestias veniam. A commodi sequi
+          accusantium ullam cupiditate. Neque quidem qui et autem dolor dicta
+          necessitatibus ut ad.
+        </p>
+        <a class="shop-button" href="#popular">
+          Explore More
+          <img src="assets/home/arrow-right.svg" alt="" />
+        </a>
+      </div>
+
+      <div class="premium__products">
+        <button
+          class="premium__arrow premium__arrow--previous"
+          type="button"
+          (click)="showPreviousProducts()"
+        >
+          <img src="assets/home/arrow-left.svg" alt="Previous products" />
+        </button>
+
+        <div class="premium__grid">
+          @for (product of getPremiumProducts(); track product._id) {
+            <app-product-card [product]="product" />
+          }
+        </div>
+
+        <button
+          class="premium__arrow premium__arrow--next"
+          type="button"
+          (click)="showNextProducts()"
+        >
+          <img src="assets/home/arrow-next.svg" alt="Next products" />
+        </button>
+      </div>
+    </section>
+
+    <section id="popular" class="popular home-container">
+      <h2 class="section-title">Popular Items</h2>
+      <div class="popular__products">
+        @for (product of products().slice(3, 15); track product._id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+    </section>
+  }
+</div>

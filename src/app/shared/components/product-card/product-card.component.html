@@ -1,0 +1,50 @@
+<article class="product-card">
+  <div class="product-card__image">
+    <img [src]="product.imgCover" [alt]="product.title" />
+
+    @if (product.quantity <= 0) {
+      <span class="product-card__stock">Out of stock</span>
+    } @else if (product.discount > 0 && hasDiscount()) {
+      <span class="product-card__discount">-{{ product.discount }}%</span>
+    }
+
+    <div class="product-card__actions">
+      <button type="button" title="Product details">
+        <img src="assets/icons/product-eye.svg" alt="" />
+      </button>
+      <button type="button" title="Add to wishlist">
+        <img src="assets/icons/product-heart.svg" alt="" />
+      </button>
+    </div>
+  </div>
+
+  <div class="product-card__info">
+    <h3>{{ product.title }}</h3>
+
+    <div class="product-card__bottom">
+      <div>
+        <div class="product-card__rating">
+          @for (star of stars; track star) {
+            <span [class.product-card__star--empty]="star > product.rateAvg">★</span>
+          }
+        </div>
+
+        <p class="product-card__price">
+          <span>{{ currentPrice() | currency }}</span>
+          @if (hasDiscount()) {
+            <del>{{ product.price | currency }}</del>
+          }
+        </p>
+      </div>
+
+      <button
+        class="product-card__bag"
+        type="button"
+        title="Add to shopping bag"
+        [disabled]="product.quantity <= 0"
+      >
+        <img src="assets/icons/product-bag.svg" alt="" />
+      </button>
+    </div>
+  </div>
+</article>
