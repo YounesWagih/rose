@@ -1,0 +1,198 @@
+<div class="category-page home-container">
+  <aside class="filters">
+    <section class="filter-card search-filter">
+      <h2>Search</h2>
+      <input
+        type="search"
+        placeholder="Search By The Name"
+        [formControl]="searchControl"
+      />
+    </section>
+
+    <section class="filter-card">
+      <h2>Category</h2>
+      <div class="filter-options">
+        @for (category of categories(); track category._id) {
+          <label class="filter-option">
+            <span>
+              <input
+                type="checkbox"
+                [checked]="selectedCategories.has(category._id)"
+                (change)="toggleCategory(category._id)"
+              />
+              {{ category.name }}
+            </span>
+            <small>({{ category.productsCount }})</small>
+          </label>
+        }
+      </div>
+    </section>
+
+    <section class="filter-card unavailable-filter">
+      <h2>Brands</h2>
+      <div class="filter-options">
+        @for (brand of brands; track brand) {
+          <label
+            class="filter-option"
+            title="Brand data is not available in the API"
+          >
+            <span><input type="checkbox" disabled /> {{ brand }}</span>
+            <small>(0)</small>
+          </label>
+        }
+      </div>
+    </section>
+
+    <section class="filter-card price-filter">
+      <h2>Price Rating</h2>
+      <p>$0 - ${{ maxPrice }}</p>
+      <input
+        type="range"
+        min="0"
+        [max]="priceLimit"
+        [(ngModel)]="maxPrice"
+        (ngModelChange)="applyFilters()"
+      />
+    </section>
+
+    <section class="filter-card">
+      <h2>Sales</h2>
+      <div class="filter-options">
+        <label class="filter-option"
+          ><span
+            ><input
+              type="checkbox"
+              [checked]="selectedSales.has('sale')"
+              (change)="toggleSale('sale')"
+            />
+            On Sale</span
+          ><small>({{ getSaleCount("sale") }})</small></label
+        >
+        <label class="filter-option"
+          ><span
+            ><input
+              type="checkbox"
+              [checked]="selectedSales.has('stock')"
+              (change)="toggleSale('stock')"
+            />
+            In Stock</span
+          ><small>({{ getSaleCount("stock") }})</small></label
+        >
+        <label class="filter-option"
+          ><span
+            ><input
+              type="checkbox"
+              [checked]="selectedSales.has('out')"
+              (change)="toggleSale('out')"
+            />
+            Out Of Stock</span
+          ><small>({{ getSaleCount("out") }})</small></label
+        >
+        <label class="filter-option"
+          ><span
+            ><input
+              type="checkbox"
+              [checked]="selectedSales.has('discount')"
+              (change)="toggleSale('discount')"
+            />
+            Discount</span
+          ><small>({{ getSaleCount("discount") }})</small></label
+        >
+      </div>
+    </section>
+
+    <section class="filter-card rating-filter">
+      <h2>Ratings</h2>
+      <div class="filter-options">
+        @for (rating of ratings; track rating) {
+          <label class="rating-option">
+            <input
+              type="checkbox"
+              [checked]="minimumRating === rating"
+              (change)="setRating(rating)"
+            />
+            <span>
+              @for (star of stars; track star) {
+                @if (star <= rating) {
+                  <img src="assets/category/star-filled.svg" alt="" />
+                } @else {
+                  <img src="assets/category/star-empty.svg" alt="" />
+                }
+              }
+            </span>
+          </label>
+        }
+      </div>
+    </section>
+
+    <section class="filter-card unavailable-filter">
+      <h2>Colors</h2>
+      <div class="color-options" title="Color data is not available in the API">
+        @for (color of colors; track color) {
+          <button type="button" disabled [style.background]="color"></button>
+        }
+      </div>
+    </section>
+
+    <section class="filter-card unavailable-filter">
+      <h2>Sizes</h2>
+      <div class="filter-options">
+        @for (size of sizes; track size) {
+          <label
+            class="filter-option"
+            title="Size data is not available in the API"
+          >
+            <span><input type="checkbox" disabled /> {{ size }}</span>
+          </label>
+        }
+      </div>
+    </section>
+  </aside>
+
+  <main class="category-products">
+    @if (errorMessage()) {
+      <p class="category-message">{{ errorMessage() }}</p>
+    } @else if (isLoading()) {
+      <p class="category-message">Loading products...</p>
+    } @else if (getFilteredProducts().length === 0) {
+      <p class="category-message">No products match these filters.</p>
+    } @else {
+      <div class="category-products__grid">
+        @for (product of getPageProducts(); track product._id) {
+          <app-product-card [product]="product" />
+        }
+      </div>
+
+      @if (getTotalPages() > 1) {
+        <nav class="pagination">
+          <button
+            type="button"
+            [disabled]="currentPage === 1"
+            (click)="goToPage(currentPage - 1)"
+          >
+            <img
+              src="assets/category/pagination-left.svg"
+              alt="Previous page"
+            />
+          </button>
+          @for (page of getPageNumbers(); track page) {
+            <button
+              type="button"
+              [class.active]="currentPage === page"
+              (click)="goToPage(page)"
+            >
+              {{ page }}
+            </button>
+          }
+          <button
+            type="button"
+            [disabled]="currentPage === getTotalPages()"
+            (click)="goToPage(currentPage + 1)"
+          >
+            <img src="assets/category/pagination-right.svg" alt="Next page" />
+          </button>
+        </nav>
+      }
+    }
+  </main>
+</div>

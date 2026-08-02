@@ -9,5 +9,12 @@ export const routes: Routes = [
         ({ HomeComponent }) => HomeComponent
       )
   },
+  {
+    path: 'category',
+    loadComponent: () =>
+      import('./features/category/category.component').then(
+        ({ CategoryComponent }) => CategoryComponent
+      )
+  },
   { path: '**', redirectTo: '' }
 ];

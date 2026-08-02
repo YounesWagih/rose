@@ -22,7 +22,7 @@
         ariaCurrentWhenActive="page"
         >Home</a
       >
-      <a class="nav-link" routerLink="/category">All Category</a>
+      <a class="nav-link" routerLink="/category" routerLinkActive="nav-link--active">All Category</a>
       <a class="nav-link" routerLink="/" fragment="about">About</a>
       <a class="nav-link" routerLink="/" fragment="contact">Contact</a>
     </nav>
@@ -89,7 +89,7 @@
         (click)="closeMenus()"
         >Home</a
       >
-      <a class="nav-link" routerLink="/category" (click)="closeMenus()">
+      <a class="nav-link" routerLink="/category" routerLinkActive="nav-link--active" (click)="closeMenus()">
         All Category
       </a>
       <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenus()">
