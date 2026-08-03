@@ -1,10 +1,9 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { finalize, tap } from 'rxjs';
 import { AuthResponse, LoginRequest } from './auth.models';
 import { AuthStorageService } from './auth-storage.service';
-
-export const AUTH_API_BASE_URL = 'https://flower.elevateegy.com/api/v1/auth';
+import { AUTH_API_URL } from '../constants/api.constants';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -17,7 +16,7 @@ export class AuthService {
 
   login(credentials: LoginRequest, remember: boolean) {
     return this.http
-      .post<AuthResponse>(`${AUTH_API_BASE_URL}/signin`, credentials)
+      .post<AuthResponse>(`${AUTH_API_URL}/signin`, credentials)
       .pipe(
         tap((response) => {
           this.storage.save(response, remember);
@@ -27,10 +26,10 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.get(`${AUTH_API_BASE_URL}/logout`).subscribe({
-      next: () => this.clearSession(),
-      error: () => this.clearSession()
-    });
+    this.http
+      .get(`${AUTH_API_URL}/logout`)
+      .pipe(finalize(() => this.clearSession()))
+      .subscribe({ error: () => undefined });
   }
 
   private clearSession(): void {

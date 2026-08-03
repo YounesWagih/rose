@@ -45,59 +45,31 @@
 
     <section class="filter-card price-filter">
       <h2>Price Rating</h2>
-      <p>$0 - ${{ maxPrice }}</p>
+      <p>$0 - ${{ priceControl.value }}</p>
       <input
         type="range"
         min="0"
         [max]="priceLimit"
-        [(ngModel)]="maxPrice"
-        (ngModelChange)="applyFilters()"
+        [formControl]="priceControl"
       />
     </section>
 
     <section class="filter-card">
       <h2>Sales</h2>
       <div class="filter-options">
-        <label class="filter-option"
-          ><span
-            ><input
-              type="checkbox"
-              [checked]="selectedSales.has('sale')"
-              (change)="toggleSale('sale')"
-            />
-            On Sale</span
-          ><small>({{ getSaleCount("sale") }})</small></label
-        >
-        <label class="filter-option"
-          ><span
-            ><input
-              type="checkbox"
-              [checked]="selectedSales.has('stock')"
-              (change)="toggleSale('stock')"
-            />
-            In Stock</span
-          ><small>({{ getSaleCount("stock") }})</small></label
-        >
-        <label class="filter-option"
-          ><span
-            ><input
-              type="checkbox"
-              [checked]="selectedSales.has('out')"
-              (change)="toggleSale('out')"
-            />
-            Out Of Stock</span
-          ><small>({{ getSaleCount("out") }})</small></label
-        >
-        <label class="filter-option"
-          ><span
-            ><input
-              type="checkbox"
-              [checked]="selectedSales.has('discount')"
-              (change)="toggleSale('discount')"
-            />
-            Discount</span
-          ><small>({{ getSaleCount("discount") }})</small></label
-        >
+        @for (filter of saleFilters; track filter.value) {
+          <label class="filter-option">
+            <span>
+              <input
+                type="checkbox"
+                [checked]="selectedSales.has(filter.value)"
+                (change)="toggleSale(filter.value)"
+              />
+              {{ filter.label }}
+            </span>
+            <small>({{ getSaleCount(filter.value) }})</small>
+          </label>
+        }
       </div>
     </section>
 
@@ -151,11 +123,11 @@
 
   <main class="category-products">
     @if (errorMessage()) {
-      <p class="category-message">{{ errorMessage() }}</p>
+      <p class="page-message">{{ errorMessage() }}</p>
     } @else if (isLoading()) {
-      <p class="category-message">Loading products...</p>
+      <p class="page-message">Loading products...</p>
     } @else if (getFilteredProducts().length === 0) {
-      <p class="category-message">No products match these filters.</p>
+      <p class="page-message">No products match these filters.</p>
     } @else {
       <div class="category-products__grid">
         @for (product of getPageProducts(); track product._id) {

@@ -14,15 +14,15 @@
     <h2>Get <span>20%</span> Off Discount Coupon</h2>
     <p>By Subscribe Our Newsletter</p>
 
-    <form>
+    <form (ngSubmit)="subscribe()">
       <input
         type="email"
         placeholder="Enter Your Email"
         [formControl]="email"
       />
-      <button type="button" (click)="subscribe()">
+      <button type="submit">
         Subscribe
-        <img src="assets/footer/footer-arrow.svg" alt="" />
+        <img src="assets/icons/arrow-right.svg" alt="" />
       </button>
     </form>
 

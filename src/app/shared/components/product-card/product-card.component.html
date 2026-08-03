@@ -2,7 +2,7 @@
   <div class="product-card__image">
     <img [src]="product.imgCover" [alt]="product.title" />
 
-    @if (product.quantity <= 0) {
+    @if (product.quantity !== undefined && product.quantity <= 0) {
       <span class="product-card__stock">Out of stock</span>
     } @else if (product.discount > 0 && hasDiscount(product)) {
       <span class="product-card__discount">-{{ product.discount }}%</span>
@@ -45,7 +45,7 @@
         class="product-card__bag"
         type="button"
         title="Add to shopping bag"
-        [disabled]="product.quantity <= 0"
+        [disabled]="product.quantity !== undefined && product.quantity <= 0"
       >
         <img src="assets/icons/product-bag.svg" alt="" />
       </button>

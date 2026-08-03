@@ -13,18 +13,36 @@
       </span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
+    <nav
+      id="site-navigation"
+      class="site-nav"
+      [class.site-nav--open]="isMenuOpen()"
+      aria-label="Primary navigation"
+    >
       <a
         class="nav-link"
         routerLink="/"
         routerLinkActive="nav-link--active"
         [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
-        >Home</a
+        (click)="closeMenus()"
       >
-      <a class="nav-link" routerLink="/category" routerLinkActive="nav-link--active">All Category</a>
-      <a class="nav-link" routerLink="/" fragment="about">About</a>
-      <a class="nav-link" routerLink="/" fragment="contact">Contact</a>
+        Home
+      </a>
+      <a
+        class="nav-link"
+        routerLink="/category"
+        routerLinkActive="nav-link--active"
+        (click)="closeMenus()"
+      >
+        All Category
+      </a>
+      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenus()">
+        About
+      </a>
+      <a class="nav-link" routerLink="/" fragment="contact" (click)="closeMenus()">
+        Contact
+      </a>
     </nav>
 
     <div class="site-header__actions">
@@ -65,7 +83,7 @@
         class="menu-button"
         type="button"
         aria-label="Toggle navigation menu"
-        aria-controls="mobile-navigation"
+        aria-controls="site-navigation"
         [attr.aria-expanded]="isMenuOpen()"
         (click)="toggleMenu()"
       >
@@ -73,36 +91,4 @@
       </button>
     </div>
   </div>
-
-  @if (isMenuOpen()) {
-    <nav
-      id="mobile-navigation"
-      class="mobile-nav"
-      aria-label="Mobile navigation"
-    > 
-      <a
-        class="nav-link"
-        routerLink="/"
-        routerLinkActive="nav-link--active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        ariaCurrentWhenActive="page"
-        (click)="closeMenus()"
-        >Home</a
-      >
-      <a class="nav-link" routerLink="/category" routerLinkActive="nav-link--active" (click)="closeMenus()">
-        All Category
-      </a>
-      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenus()">
-        About
-      </a>
-      <a
-        class="nav-link"
-        routerLink="/"
-        fragment="contact"
-        (click)="closeMenus()"
-      >
-        Contact
-      </a>
-    </nav>
-  }
 </header>

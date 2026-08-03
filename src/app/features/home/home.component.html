@@ -21,7 +21,7 @@
         <h1>Special Gifts Box For Your Love</h1>
         <a class="shop-button" href="#popular">
           Shop Now
-          <img src="assets/home/arrow-right.svg" alt="" />
+          <img src="assets/icons/arrow-right.svg" alt="" />
         </a>
       </div>
     </article>
@@ -37,7 +37,7 @@
         </p>
         <a class="shop-button" href="#popular">
           Shop Now
-          <img src="assets/home/arrow-right.svg" alt="" />
+          <img src="assets/icons/arrow-right.svg" alt="" />
         </a>
       </div>
       <div class="hero-banner__dots">
@@ -50,11 +50,11 @@
         }
       </div>
       <div class="hero-banner__arrows">
-        <button type="button" (click)="showPreviousBanner()">
-          <img src="assets/home/arrow-left.svg" alt="Previous banner" />
+        <button type="button" (click)="moveBanner(-1)">
+          <img src="assets/icons/chevron-left.svg" alt="Previous banner" />
         </button>
-        <button type="button" (click)="showNextBanner()">
-          <img src="assets/home/arrow-next.svg" alt="Next banner" />
+        <button type="button" (click)="moveBanner(1)">
+          <img src="assets/icons/chevron-right.svg" alt="Next banner" />
         </button>
       </div>
     </article>
@@ -107,11 +107,11 @@
   </section>
 
   @if (errorMessage()) {
-    <p class="home-message home-container">{{ errorMessage() }}</p>
+    <p class="page-message page-message--home home-container">{{ errorMessage() }}</p>
   } @else if (isLoading()) {
-    <p class="home-message home-container">Loading products...</p>
+    <p class="page-message page-message--home home-container">Loading products...</p>
   } @else if (products().length === 0) {
-    <p class="home-message home-container">No products available right now.</p>
+    <p class="page-message page-message--home home-container">No products available right now.</p>
   } @else {
     <section class="premium home-container">
       <div class="premium__intro">
@@ -124,7 +124,7 @@
         </p>
         <a class="shop-button" href="#popular">
           Explore More
-          <img src="assets/home/arrow-right.svg" alt="" />
+          <img src="assets/icons/arrow-right.svg" alt="" />
         </a>
       </div>
 
@@ -132,9 +132,9 @@
         <button
           class="premium__arrow premium__arrow--previous"
           type="button"
-          (click)="showPreviousProducts()"
+          (click)="moveProducts(-1)"
         >
-          <img src="assets/home/arrow-left.svg" alt="Previous products" />
+          <img src="assets/icons/chevron-left.svg" alt="Previous products" />
         </button>
 
         <div class="premium__grid">
@@ -146,9 +146,9 @@
         <button
           class="premium__arrow premium__arrow--next"
           type="button"
-          (click)="showNextProducts()"
+          (click)="moveProducts(1)"
         >
-          <img src="assets/home/arrow-next.svg" alt="Next products" />
+          <img src="assets/icons/chevron-right.svg" alt="Next products" />
         </button>
       </div>
     </section>
@@ -187,7 +187,7 @@
       </p>
       <a class="shop-button" href="#popular">
         Discover More
-        <img src="assets/home/about/about-arrow.svg" alt="" />
+        <img src="assets/icons/arrow-right.svg" alt="" />
       </a>
 
       <div class="about__features">
@@ -216,8 +216,8 @@
   <section class="reviews">
     <img class="reviews__background" src="assets/home/reviews/reviews-bg.png" alt="" />
     <div class="reviews__content home-container">
-      <button class="reviews__arrow" type="button" (click)="showPreviousReviews()">
-        <img src="assets/home/reviews/review-prev.svg" alt="Previous reviews" />
+      <button class="reviews__arrow" type="button" (click)="moveReviews(-1)">
+        <img src="assets/icons/chevron-left.svg" alt="Previous reviews" />
       </button>
 
       <div class="reviews__grid">
@@ -248,8 +248,8 @@
         }
       </div>
 
-      <button class="reviews__arrow" type="button" (click)="showNextReviews()">
-        <img src="assets/home/reviews/review-next.svg" alt="Next reviews" />
+      <button class="reviews__arrow" type="button" (click)="moveReviews(1)">
+        <img src="assets/icons/chevron-right.svg" alt="Next reviews" />
       </button>
     </div>
     <img class="reviews__dots" src="assets/home/reviews/review-dots.svg" alt="" />

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   catchError,
   debounceTime,
@@ -8,7 +9,6 @@ import {
   of,
   startWith,
   Subject,
-  Subscription,
   switchMap
 } from 'rxjs';
 import { CategoryService } from '../../core/services/category.service';
@@ -18,16 +18,19 @@ import { Category } from '../../shared/models/category.model';
 import { Product, ProductFilters } from '../../shared/models/product.model';
 import { hasProductDiscount } from '../../shared/utils/product-price.util';
 
+type SaleFilter = 'sale' | 'stock' | 'out' | 'discount';
+
 @Component({
   selector: 'app-category',
-  imports: [FormsModule, ProductCardComponent, ReactiveFormsModule],
+  imports: [ProductCardComponent, ReactiveFormsModule],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CategoryComponent implements OnInit, OnDestroy {
-  private categoryService = inject(CategoryService);
-  private productService = inject(ProductService);
+export class CategoryComponent implements OnInit {
+  private readonly categoryService = inject(CategoryService);
+  private readonly productService = inject(ProductService);
+  private readonly destroyRef = inject(DestroyRef);
 
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
@@ -35,10 +38,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
   errorMessage = signal('');
 
   searchControl = new FormControl('', { nonNullable: true });
+  priceControl = new FormControl(5000, { nonNullable: true });
   selectedCategories = new Set<string>();
-  selectedSales = new Set<string>();
+  selectedSales = new Set<SaleFilter>();
   minimumRating = 0;
-  maxPrice = 5000;
   priceLimit = 5000;
   currentPage = 1;
   productsPerPage = 15;
@@ -48,16 +51,22 @@ export class CategoryComponent implements OnInit, OnDestroy {
   sizes = ['Extra Small', 'Small', 'Medium', 'Large', 'Extra Large'];
   ratings = [5, 4, 3, 2, 1];
   stars = [1, 2, 3, 4, 5];
+  saleFilters = [
+    { value: 'sale', label: 'On Sale' },
+    { value: 'stock', label: 'In Stock' },
+    { value: 'out', label: 'Out Of Stock' },
+    { value: 'discount', label: 'Discount' }
+  ] as const;
 
   private filtersChanged = new Subject<void>();
-  private productsSubscription?: Subscription;
   private priceLimitLoaded = false;
 
   ngOnInit() {
     this.loadCategories();
 
-    this.productsSubscription = merge(
+    merge(
       this.searchControl.valueChanges.pipe(distinctUntilChanged()),
+      this.priceControl.valueChanges.pipe(distinctUntilChanged()),
       this.filtersChanged
     )
       .pipe(
@@ -66,7 +75,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
         switchMap(() => {
           this.isLoading.set(true);
           this.errorMessage.set('');
-          this.resetPage();
+          this.currentPage = 1;
 
           return this.productService.getProducts(this.getApiFilters()).pipe(
             catchError(() => {
@@ -74,17 +83,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
               return of({ products: [] });
             })
           );
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((response) => {
         this.products.set(response.products);
         this.setInitialPriceLimit(response.products);
         this.isLoading.set(false);
       });
-  }
-
-  ngOnDestroy() {
-    this.productsSubscription?.unsubscribe();
   }
 
   getFilteredProducts() {
@@ -107,7 +113,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     return Math.ceil(this.getFilteredProducts().length / this.productsPerPage);
   }
 
-  getSaleCount(filter: string) {
+  getSaleCount(filter: SaleFilter) {
     return this.products().filter((product) => this.matchesSaleFilter(product, filter)).length;
   }
 
@@ -116,7 +122,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  toggleSale(filter: string) {
+  toggleSale(filter: SaleFilter) {
     this.toggleSetValue(this.selectedSales, filter);
     this.applyFilters();
   }
@@ -127,7 +133,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   applyFilters() {
-    this.resetPage();
     this.filtersChanged.next();
   }
 
@@ -137,16 +142,11 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetPage() {
-    this.currentPage = 1;
-  }
-
-  private toggleSetValue(values: Set<string>, value: string) {
+  private toggleSetValue<T>(values: Set<T>, value: T) {
     values.has(value) ? values.delete(value) : values.add(value);
-    this.resetPage();
   }
 
-  private matchesSaleFilter(product: Product, filter: string) {
+  private matchesSaleFilter(product: Product, filter: SaleFilter) {
     if (filter === 'sale') return product.discount > 0;
     if (filter === 'stock') return product.quantity > 0;
     if (filter === 'out') return product.quantity <= 0;
@@ -158,18 +158,17 @@ export class CategoryComponent implements OnInit, OnDestroy {
     const wantsOutOfStock = this.selectedSales.has('out');
     let stock: ProductFilters['stock'];
 
-    if (wantsInStock !== wantsOutOfStock) {
+    if (wantsInStock !== wantsOutOfStock) {  // both true = nothing   (like XOR ^_^ )
       stock = wantsInStock ? 'in' : 'out';
     }
 
     return {
       keyword: this.searchControl.value,
       categories: [...this.selectedCategories],
-      maxPrice: this.maxPrice,
+      maxPrice: this.priceControl.value,
       minimumRating: this.minimumRating,
       stock,
-      onSale: this.selectedSales.has('sale') || this.selectedSales.has('discount'),
-      limit: 50
+      onSale: this.selectedSales.has('sale') || this.selectedSales.has('discount')
     };
   }
 
@@ -178,14 +177,17 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
     const prices = products.map((product) => product.price);
     this.priceLimit = Math.ceil(Math.max(...prices, 1));
-    this.maxPrice = this.priceLimit;
+    this.priceControl.setValue(this.priceLimit, { emitEvent: false });
     this.priceLimitLoaded = true;
   }
 
   private loadCategories() {
-    this.categoryService.getCategories().subscribe({
-      next: (response) => this.categories.set(response.categories),
-      error: () => this.errorMessage.set('Could not load categories.')
-    });
+    this.categoryService
+      .getCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => this.categories.set(response.categories),
+        error: () => this.errorMessage.set('Could not load categories.')
+      });
   }
 }

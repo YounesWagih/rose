@@ -3,13 +3,15 @@ import { inject, Injectable } from '@angular/core';
 import {
   ProductDetailsResponse,
   ProductFilters,
-  ProductsResponse
+  ProductsResponse,
+  RelatedProductsResponse
 } from '../../shared/models/product.model';
+import { API_BASE_URL } from '../constants/api.constants';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private http = inject(HttpClient);
-  private apiUrl = 'https://flower.elevateegy.com/api/v1/products';
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${API_BASE_URL}/products`;
 
   getProducts(filters: ProductFilters = {}) {
     let params = new HttpParams();
@@ -21,14 +23,6 @@ export class ProductService {
     filters.categories?.forEach((category) => {
       params = params.append('category', category);
     });
-
-    if (filters.occasion) {
-      params = params.set('occasion', filters.occasion);
-    }
-
-    if (filters.minPrice !== undefined) {
-      params = params.set('price[gte]', filters.minPrice);
-    }
 
     if (filters.maxPrice !== undefined) {
       params = params.set('price[lte]', filters.maxPrice);
@@ -48,10 +42,6 @@ export class ProductService {
       params = params.set('discount[gt]', 0);
     }
 
-    if (filters.sort) {
-      params = params.set('sort', filters.sort);
-    }
-
     params = params.set('limit', filters.limit ?? 50);
 
     return this.http.get<ProductsResponse>(this.apiUrl, { params });
@@ -59,5 +49,11 @@ export class ProductService {
 
   getProductById(id: string) {
     return this.http.get<ProductDetailsResponse>(`${this.apiUrl}/${id}`);
+  }
+
+  getRelatedProducts(productId: string) {
+    return this.http.get<RelatedProductsResponse>(
+      `${API_BASE_URL}/related/category/${productId}`
+    );
   }
 }

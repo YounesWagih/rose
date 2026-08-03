@@ -1,12 +1,12 @@
 import { inject } from '@angular/core';
 import { HttpInterceptorFn } from '@angular/common/http';
-import { AUTH_API_BASE_URL } from './auth.service';
+import { API_BASE_URL } from '../constants/api.constants';
 import { AuthStorageService } from './auth-storage.service';
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const token = inject(AuthStorageService).getToken();
 
-  if (!token || !request.url.startsWith(AUTH_API_BASE_URL)) {
+  if (!token || !request.url.startsWith(API_BASE_URL)) {
     return next(request);
   }
 

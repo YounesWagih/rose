@@ -1,14 +1,18 @@
-export interface Product {
+export interface ProductCardItem {
   _id: string;
   title: string;
-  slug: string;
-  description: string;
   imgCover: string;
-  images: string[];
   price: number;
   priceAfterDiscount: number;
   discount: number;
   rateAvg: number;
+  quantity?: number;
+}
+
+export interface Product extends ProductCardItem {
+  slug: string;
+  description: string;
+  images: string[];
   quantity: number;
   category: string;
   occasion: string;
@@ -23,15 +27,16 @@ export interface ProductDetailsResponse {
   product: Product;
 }
 
+export interface RelatedProductsResponse {
+  relatedProducts: ProductCardItem[];
+}
+
 export interface ProductFilters {
   keyword?: string;
   categories?: string[];
-  occasion?: string;
-  minPrice?: number;
   maxPrice?: number;
   minimumRating?: number;
   stock?: 'in' | 'out';
   onSale?: boolean;
-  sort?: 'price' | '-price';
   limit?: number;
 }
