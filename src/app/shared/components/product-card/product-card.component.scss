@@ -18,7 +18,6 @@
   padding: 18px;
 }
 
-.product-card__discount,
 .product-card__stock {
   position: absolute;
   inset-block-start: 16px;
@@ -27,10 +26,6 @@
   color: var(--color-white);
   font-size: 13px;
   padding: 5px 10px;
-}
-
-.product-card__discount {
-  background: var(--color-primary);
 }
 
 .product-card__stock {

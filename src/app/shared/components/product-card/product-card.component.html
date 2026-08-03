@@ -4,8 +4,6 @@
 
     @if (product.quantity !== undefined && product.quantity <= 0) {
       <span class="product-card__stock">Out of stock</span>
-    } @else if (product.discount > 0 && hasDiscount(product)) {
-      <span class="product-card__discount">-{{ product.discount }}%</span>
     }
 
     <div class="product-card__actions">
