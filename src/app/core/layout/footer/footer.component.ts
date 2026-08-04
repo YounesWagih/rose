@@ -31,8 +31,8 @@ export class FooterComponent {
     }
 
     this.subscriptionService.subscribe(this.email.value).subscribe({
-      next: () => {
-        this.message.set('Thank you for subscribing!');
+      next: (response) => {
+        this.message.set(response.message);
         this.email.reset();
       },
       error: () => this.message.set('Subscription failed. Please try again.')
