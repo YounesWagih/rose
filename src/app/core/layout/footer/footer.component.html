@@ -14,7 +14,7 @@
     <h2>Get <span>20%</span> Off Discount Coupon</h2>
     <p>By Subscribe Our Newsletter</p>
 
-    <form (ngSubmit)="subscribe()">
+    <form [formGroup]="subscriptionForm" (ngSubmit)="subscribe()">
       <input
         type="email"
         placeholder="Enter Your Email"

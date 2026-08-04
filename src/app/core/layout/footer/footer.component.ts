@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SubscriptionService } from '../../services/subscription.service';
 
 @Component({
@@ -12,8 +12,17 @@ import { SubscriptionService } from '../../services/subscription.service';
 export class FooterComponent {
   private subscriptionService = inject(SubscriptionService);
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  subscriptionForm = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email]
+    })
+  });
   message = signal('');
+
+  get email() {
+    return this.subscriptionForm.controls.email;
+  }
 
   subscribe() {
     if (this.email.invalid || !this.email.value) {
