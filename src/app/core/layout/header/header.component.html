@@ -57,15 +57,18 @@
       </button>
 
       @if (auth.isAuthenticated()) {
-        <span class="icon-button wishlist-indicator" title="Wishlist">
+        <span class="icon-button header-indicator" title="Wishlist">
           <img src="assets/icons/header-wishlist.svg" alt="" />
           @if (wishlist.count() > 0) {
-            <span class="wishlist-indicator__count">{{ wishlist.count() }}</span>
+            <span class="header-indicator__count">{{ wishlist.count() }}</span>
           }
         </span>
-        <button class="icon-button" type="button" aria-label="Open shopping bag" title="Cart will be added in its milestone" disabled>
+        <span class="icon-button header-indicator" title="Cart">
           <img src="assets/icons/shopping-bag.svg" alt="" />
-        </button>
+          @if (cart.count() > 0) {
+            <span class="header-indicator__count">{{ cart.count() }}</span>
+          }
+        </span>
         <button class="icon-button user-button" type="button" aria-label="Open account menu" aria-controls="account-menu" [attr.aria-expanded]="isUserMenuOpen()" (click)="toggleUserMenu()">
           <img src="assets/icons/user.svg" alt="" />
         </button>

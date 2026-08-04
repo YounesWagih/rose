@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { CartService } from '../../services/cart.service';
 import { LoginPopupService } from '../../services/login-popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 
@@ -12,6 +13,7 @@ import { WishlistService } from '../../services/wishlist.service';
 })
 export class HeaderComponent {
   readonly auth = inject(AuthService);
+  readonly cart = inject(CartService);
   readonly wishlist = inject(WishlistService);
   private readonly loginPopup = inject(LoginPopupService);
 

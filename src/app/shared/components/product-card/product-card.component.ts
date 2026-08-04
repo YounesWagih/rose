@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
+import { CartService } from '../../../core/services/cart.service';
 import { LoginPopupService } from '../../../core/services/login-popup.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { ProductCardItem } from '../../models/product.model';
@@ -20,6 +21,7 @@ import {
 export class ProductCardComponent {
   private readonly auth = inject(AuthService);
   private readonly loginPopup = inject(LoginPopupService);
+  readonly cart = inject(CartService);
   readonly wishlist = inject(WishlistService);
 
   @Input({ required: true }) product!: ProductCardItem;
@@ -35,5 +37,14 @@ export class ProductCardComponent {
     }
 
     this.wishlist.toggle(this.product._id);
+  }
+
+  addToCart(): void {
+    if (!this.auth.isAuthenticated()) {
+      this.loginPopup.open();
+      return;
+    }
+
+    this.cart.add(this.product._id);
   }
 }

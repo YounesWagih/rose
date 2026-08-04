@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
 import { AuthService } from '../../core/auth/auth.service';
+import { CartService } from '../../core/services/cart.service';
 import { CategoryService } from '../../core/services/category.service';
 import { LoginPopupService } from '../../core/services/login-popup.service';
 import { ProductService } from '../../core/services/product.service';
@@ -29,6 +30,7 @@ export class ProductDetailsComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly auth = inject(AuthService);
   private readonly loginPopup = inject(LoginPopupService);
+  readonly cart = inject(CartService);
   readonly wishlist = inject(WishlistService);
 
   product = signal<Product | null>(null);
@@ -120,5 +122,20 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     this.wishlist.toggle(product._id);
+  }
+
+  addToCart(): void {
+    const product = this.product();
+
+    if (!product) {
+      return;
+    }
+
+    if (!this.auth.isAuthenticated()) {
+      this.loginPopup.open();
+      return;
+    }
+
+    this.cart.add(product._id, this.quantity);
   }
 }

@@ -85,7 +85,8 @@
           <button
             class="add-to-cart"
             type="button"
-            [disabled]="productData.quantity <= 0"
+            [disabled]="productData.quantity <= 0 || cart.isUpdating()"
+            (click)="addToCart()"
           >
             <img src="assets/product-details/cart.svg" alt="" />
             Add To Cart
