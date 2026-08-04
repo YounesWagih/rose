@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -19,7 +20,7 @@ import { forkJoin } from 'rxjs';
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
 
@@ -33,7 +34,7 @@ export class HomeComponent implements OnInit {
     'assets/home/hero-banner-2.png',
     'assets/home/hero-banner-3.png',
   ];
-  currentBanner = 0;
+  currentBanner = signal(0);
   premiumStart = 0;
   reviewStart = 0;
 
@@ -61,8 +62,11 @@ export class HomeComponent implements OnInit {
   ];
 
   trustedCompanies = [1, 2, 3, 4, 5, 6];
+  private bannerTimer?: ReturnType<typeof setInterval>;
 
   ngOnInit() {
+    this.bannerTimer = setInterval(() => this.moveBanner(1), 5000);
+
     forkJoin({
       categories: this.categoryService.getCategories(),
       products: this.productService.getProducts(),
@@ -79,16 +83,22 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    clearInterval(this.bannerTimer);
+  }
+
   moveBanner(direction: number) {
-    this.currentBanner = this.moveIndex(
-      this.currentBanner,
-      direction,
-      this.heroBanners.length,
+    this.currentBanner.set(
+      this.moveIndex(
+        this.currentBanner(),
+        direction,
+        this.heroBanners.length,
+      ),
     );
   }
 
   showBanner(index: number) {
-    this.currentBanner = index;
+    this.currentBanner.set(index);
   }
 
   getPremiumProducts() {

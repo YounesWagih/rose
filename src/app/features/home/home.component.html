@@ -27,7 +27,7 @@
     </article>
 
     <article class="hero-banner">
-      <img [src]="heroBanners[currentBanner]" alt="Rose gift shop banner" />
+      <img [src]="heroBanners[currentBanner()]" alt="Rose gift shop banner" />
       <div class="hero-banner__copy">
         <p>BEST GIFT SHOP</p>
         <h2>Choose Perfect <span>Gifts</span> From Us</h2>
@@ -44,7 +44,7 @@
         @for (banner of heroBanners; track banner; let index = $index) {
           <button
             type="button"
-            [class.active]="index === currentBanner"
+            [class.active]="index === currentBanner()"
             (click)="showBanner(index)"
           ></button>
         }
@@ -258,9 +258,14 @@
   <section class="trusted home-container">
     <h2 class="section-title">Trusted By Over <span>4.5k+</span> Companies</h2>
     <div class="trusted__logos">
-      @for (company of trustedCompanies; track company) {
-        <img [src]="'assets/home/trusted/trusted-' + company + '.png'" [alt]="'Trusted company ' + company" />
-      }
+      <div class="trusted__track">
+        @for (company of trustedCompanies; track company) {
+          <img [src]="'assets/home/trusted/trusted-' + company + '.png'" [alt]="'Trusted company ' + company" />
+        }
+        @for (company of trustedCompanies; track company) {
+          <img [src]="'assets/home/trusted/trusted-' + company + '.png'" alt="" />
+        }
+      </div>
     </div>
   </section>
 </div>
