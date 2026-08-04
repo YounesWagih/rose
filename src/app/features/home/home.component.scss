@@ -247,7 +247,7 @@
 }
 
 .promotion--jewelry > img {
-  object-position: 42% center;
+  object-position: center;
 }
 
 .promotion div {
@@ -426,6 +426,13 @@
   margin-block-start: 34px;
 }
 
+.popular__categories {
+  display: none;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
 .about {
   display: grid;
   grid-template-columns: 530px 1fr;
@@ -451,11 +458,11 @@
     inset-block-start: 0;
     inset-inline-start: 5px;
     width: 268px;
-    height: 372px;
-    border: 4.5px solid var(--color-primary);
-    border-radius: 50px 120px 120px 102px;
+    height: 363px;
+    border: 4px solid var(--color-primary);
+    border-radius: 50px 120px 120px;
     content: "";
-    transform: rotate(3.91deg);
+    transform: rotate(3.09deg);
 }
 
 .about__main-photo img {
@@ -464,13 +471,13 @@
   inset-inline-start: 27px;
   width: 302px;
   height: 344px;
-  border-radius: 50px 100px 100px;
+  border-radius: 50px 120px 120px;
   object-fit: cover;
 }
 
 .about__small-photos {
   display: grid;
-  grid-template-rows: 193px 160px;
+  grid-template-rows: 193px 144px;
   gap: 8px;
   padding-block-start: 10px;
 }
@@ -486,7 +493,7 @@
 }
 
 .about__small-photos img:last-child {
-  border-radius: 45px 45px 45px 70px;
+  border-radius: 50px 100px 100px 50px;
 }
 
 .about__content .eyebrow {
@@ -771,7 +778,26 @@ position: absolute;
   }
 }
 
+.trusted__button {
+  display: none;
+}
+
 @media (max-width: 1100px) {
+  .categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .promotions,
+  .benefits,
+  .popular__products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .promotion:last-child,
+  .benefits article:last-child {
+    grid-column: 1 / -1;
+  }
+
   .about {
     grid-template-columns: 1fr;
   }
@@ -786,5 +812,381 @@ position: absolute;
 
   .review-card:nth-child(n + 3) {
     display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .home {
+    padding-block: 16px 40px;
+  }
+
+  .category-card {
+    min-height: 198px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .category-card__image {
+    flex-basis: 112px;
+    width: 112px;
+    height: 112px;
+  }
+
+  .category-card__image img {
+    width: 78px;
+    height: 78px;
+  }
+
+  .category-card h2 {
+    font-size: 20px;
+    white-space: normal;
+  }
+
+  .category-card__text p {
+    font-size: 16px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-block-start: 16px;
+  }
+
+  .side-offer {
+    height: 440px;
+  }
+
+  .side-offer__copy {
+    inset-block-start: 42%;
+    inset-block-end: auto;
+  }
+
+  .side-offer__copy h1 {
+    font-size: 20px;
+  }
+
+  .side-offer__copy .shop-button,
+  .hero-banner__copy .shop-button {
+    min-height: 36px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  .hero-banner {
+    height: 210px;
+  }
+
+  .hero-banner__copy {
+    inset-block-start: 20px;
+    inset-inline-start: 16px;
+    width: min(210px, 62%);
+  }
+
+  .hero-banner__copy h2 {
+    margin: 10px 0 8px;
+    font-size: 20px;
+  }
+
+  .hero-banner__copy .hero-banner__description {
+    overflow: hidden;
+    max-height: 60px;
+    margin-block-end: 10px;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .hero-banner__arrows {
+    inset-inline-end: 10px;
+    inset-block-end: 8px;
+    gap: 4px;
+  }
+
+  .hero-banner__arrows button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hero-banner__arrows img {
+    width: 8px;
+    height: 13px;
+  }
+
+  .hero-banner__dots {
+    display: none;
+  }
+
+  .promotions {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-block-start: 16px;
+  }
+
+  .promotion:last-child,
+  .benefits article:last-child {
+    grid-column: auto;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr;
+    margin-block-start: 24px;
+    padding-block: 16px;
+  }
+
+  .benefits article {
+    min-height: 112px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  .benefits span {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .benefits img {
+    width: 26px;
+    height: 24px;
+  }
+
+  .benefits h2 {
+    font-size: 16px;
+  }
+
+  .benefits p {
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .premium {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-block-start: 24px;
+  }
+
+  .premium__intro .eyebrow {
+    margin-block-end: 16px;
+    font-size: 16px;
+    line-height: 30.6px;
+  }
+
+  .premium__intro h2,
+  .section-title,
+  .about__content h2 {
+    font-size: 20px;
+  }
+
+  .premium__description,
+  .about__description {
+    margin: 8px 0 16px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .premium__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .premium__grid app-product-card:nth-child(n + 2) {
+    display: none;
+  }
+
+  .premium__arrow {
+    inset-block-start: 115px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .popular {
+    margin-block-start: 24px;
+  }
+
+  .popular > .section-title {
+    display: table;
+    margin-inline: auto;
+  }
+
+  .popular__categories {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding-block-end: 6px;
+    scrollbar-width: none;
+  }
+
+  .popular__categories::-webkit-scrollbar,
+  .reviews__grid::-webkit-scrollbar,
+  .trusted__logos::-webkit-scrollbar {
+    display: none;
+  }
+
+  .popular__categories li {
+    flex: 0 0 auto;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .popular__categories li.active {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .popular__products {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-block-start: 16px;
+  }
+
+  .about {
+    gap: 16px;
+    margin-block-start: 24px;
+  }
+
+  .about__photos {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    width: 100%;
+    height: 371px;
+  }
+
+  .about__main-photo {
+    height: 100%;
+  }
+
+  .about__main-photo::before {
+    width: 82%;
+    height: 98%;
+  }
+
+  .about__main-photo img {
+    inset-block-start: 12px;
+    inset-inline-start: 14px;
+    width: calc(100% - 14px);
+    height: calc(100% - 12px);
+  }
+
+  .about__small-photos {
+    grid-template-rows: 1fr 1fr;
+    padding-block-start: 8px;
+  }
+
+  .about__content .eyebrow {
+    margin-block-end: 16px;
+  }
+
+  .about__content h2 br {
+    display: none;
+  }
+
+  .about__features {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-block-start: 16px;
+  }
+
+  .about__features img {
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+  }
+
+  .gallery {
+    margin-block-start: 24px;
+  }
+
+  .gallery__heading {
+    align-items: flex-start;
+    text-align: start;
+  }
+
+  .gallery__grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 8px;
+    margin-block-start: 16px;
+  }
+
+  .gallery__grid img {
+    height: auto;
+    aspect-ratio: 344 / 411;
+  }
+
+  .gallery__wide {
+    grid-column: auto;
+  }
+
+  .reviews {
+    height: 410px;
+    margin-block-start: 24px;
+  }
+
+  .reviews__content {
+    padding-block-start: 16px;
+  }
+
+  .reviews__grid {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .review-card,
+  .review-card:nth-child(n + 3) {
+    display: block;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  .reviews__arrow {
+    display: none;
+  }
+
+  .reviews__dots {
+    inset-block-end: 16px;
+  }
+
+  .trusted {
+    min-height: 184px;
+    align-items: stretch;
+    gap: 16px;
+    margin-block-start: 24px;
+    padding-block: 16px;
+  }
+
+  .trusted__track img {
+    flex: 0 0 96px;
+    width: 96px;
+    height: 30px;
+  }
+
+  .trusted__button {
+    display: inline-flex;
+    align-self: center;
+  }
+}
+
+@media (max-width: 359px) {
+  .category-card {
+    min-height: 180px;
+  }
+
+  .category-card__image {
+    flex-basis: 92px;
+    width: 92px;
+    height: 92px;
+  }
+
+  .category-card h2 {
+    font-size: 17px;
   }
 }

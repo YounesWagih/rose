@@ -18,8 +18,20 @@
   padding: 18px;
 }
 
+.product-card__image-toggle {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
 .product-card__stock {
   position: absolute;
+  z-index: 5;
   inset-block-start: 16px;
   inset-inline-end: 12px;
   border-radius: 20px;
@@ -34,6 +46,7 @@
 
 .product-card__actions {
   position: absolute;
+  z-index: 3;
   inset: 0;
   display: flex;
   align-items: center;
@@ -41,11 +54,24 @@
   gap: 12px;
   background: rgb(248 43 169 / 72%);
   opacity: 0;
+  pointer-events: none;
   transition: opacity 180ms ease;
 }
 
-.product-card__image:hover .product-card__actions {
+.product-card__image--actions-visible .product-card__actions {
   opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: hover) {
+  .product-card__image:hover .product-card__actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.product-card__carousel-arrow {
+  display: none;
 }
 
 .product-card__actions button,
@@ -136,4 +162,60 @@
 .product-card__bag:disabled {
   cursor: not-allowed;
   opacity: 0.45;
+}
+
+@media (max-width: 767px) {
+  .product-card__image {
+    width: 100%;
+    height: 272px;
+  }
+
+  .product-card__info {
+    padding-inline: 0;
+  }
+
+  .product-card h3 {
+    display: -webkit-box;
+    min-height: 49px;
+    overflow: hidden;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .product-card__bottom > div {
+    min-width: 0;
+  }
+
+  .product-card__price {
+    flex-wrap: wrap;
+  }
+
+  .product-card__carousel-arrow {
+    position: absolute;
+    z-index: 4;
+    inset-block-start: 50%;
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    transform: translateY(-50%);
+  }
+
+  .product-card__carousel-arrow--previous {
+    inset-inline-start: 0;
+  }
+
+  .product-card__carousel-arrow--next {
+    inset-inline-end: 0;
+  }
+
+  .product-card__carousel-arrow img {
+    width: 14px;
+    height: 23px;
+  }
 }

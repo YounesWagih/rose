@@ -364,6 +364,12 @@
   .product-gallery__thumbnails button {
     height: auto;
     aspect-ratio: 1 / 1;
+    min-width: 0;
+    padding: 6px;
+  }
+
+  .product-gallery__thumbnails {
+    gap: 8px;
   }
 
   .product-info {
@@ -377,8 +383,23 @@
   }
 
   .product-options {
+    width: 100%;
     flex-wrap: wrap;
     gap: 28px;
+  }
+
+  .product-description,
+  .product-meta {
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .product-actions {
+    width: 100%;
+  }
+
+  .add-to-cart {
+    flex: 1;
   }
 
   .related-products__grid {
@@ -386,6 +407,16 @@
   }
 
   .related-products__header {
+    gap: 12px;
     padding-inline: 0;
+  }
+
+  .related-products__header h2 {
+    font-size: 20px;
+  }
+
+  .related-products__header a {
+    flex: 0 0 auto;
+    font-size: 14px;
   }
 }

@@ -1,5 +1,20 @@
 <div class="category-page home-container">
-  <aside class="filters">
+  <button
+    class="filters-toggle"
+    type="button"
+    aria-controls="category-filters"
+    [attr.aria-expanded]="filtersOpen()"
+    (click)="toggleFilters()"
+  >
+    <span>Filters</span>
+    <span class="filters-toggle__icon" aria-hidden="true"></span>
+  </button>
+
+  <aside
+    id="category-filters"
+    class="filters"
+    [class.filters--open]="filtersOpen()"
+  >
     <section class="filter-card search-filter">
       <h2>Search</h2>
       <input

@@ -1,16 +1,46 @@
 <article class="product-card">
-  <div class="product-card__image">
+  <div
+    class="product-card__image"
+    [class.product-card__image--actions-visible]="actionsVisible()"
+  >
     <img [src]="product.imgCover" [alt]="product.title" />
+    <button
+      class="product-card__image-toggle"
+      type="button"
+      [attr.aria-expanded]="actionsVisible()"
+      [attr.aria-label]="'Show actions for ' + product.title"
+      (click)="toggleProductActions()"
+    ></button>
 
     @if (product.quantity !== undefined && product.quantity <= 0) {
       <span class="product-card__stock">Out of stock</span>
     }
 
-    <div class="product-card__actions">
+    @if (showNavigation) {
+      <button
+        class="product-card__carousel-arrow product-card__carousel-arrow--previous"
+        type="button"
+        [attr.aria-label]="'Previous product from ' + product.title"
+        (click)="$event.stopPropagation(); previous.emit()"
+      >
+        <img src="assets/icons/chevron-left.svg" alt="" />
+      </button>
+      <button
+        class="product-card__carousel-arrow product-card__carousel-arrow--next"
+        type="button"
+        [attr.aria-label]="'Next product from ' + product.title"
+        (click)="$event.stopPropagation(); next.emit()"
+      >
+        <img src="assets/icons/chevron-right.svg" alt="" />
+      </button>
+    }
+
+    <div class="product-card__actions" (click)="toggleProductActions()">
       <button
         type="button"
         title="Product details"
         [routerLink]="['/product', product._id]"
+        (click)="$event.stopPropagation()"
       >
         <img src="assets/icons/product-eye.svg" alt="" />
       </button>
@@ -18,7 +48,7 @@
         type="button"
         [title]="wishlist.isInWishlist(product._id) ? 'Remove from wishlist' : 'Add to wishlist'"
         [disabled]="wishlist.isUpdating()"
-        (click)="toggleWishlist()"
+        (click)="$event.stopPropagation(); toggleWishlist()"
       >
         @if (wishlist.isInWishlist(product._id)) {
           <img src="assets/icons/product-remove.svg" alt="" />

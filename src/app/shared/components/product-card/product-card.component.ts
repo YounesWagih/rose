@@ -1,5 +1,13 @@
 import { CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/auth/auth.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -25,10 +33,18 @@ export class ProductCardComponent {
   readonly wishlist = inject(WishlistService);
 
   @Input({ required: true }) product!: ProductCardItem;
+  @Input() showNavigation = false;
+  @Output() readonly previous = new EventEmitter<void>();
+  @Output() readonly next = new EventEmitter<void>();
 
   stars = [1, 2, 3, 4, 5];
+  actionsVisible = signal(false);
   hasDiscount = hasProductDiscount;
   currentPrice = getCurrentProductPrice;
+
+  toggleProductActions(): void {
+    this.actionsVisible.update((isVisible) => !isVisible);
+  }
 
   toggleWishlist(): void {
     if (!this.auth.isAuthenticated()) {

@@ -35,6 +35,32 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+app-home .about__main-photo > img,
+app-home .about__small-photos > img:last-child {
+  object-position: center 30%;
+}
+
+app-home .popular__products--mobile {
+  display: none !important;
+}
+
+app-home .promotion--jewelry::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90.9757deg,
+    rgb(0 0 0 / 0%) 0.506%,
+    rgb(255 255 255 / 50%) 99.4%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+body.mobile-navigation-open {
+  overflow: hidden;
 }
 
 button,
@@ -49,6 +75,12 @@ button {
 
 img {
   display: block;
+  max-width: 100%;
+}
+
+input,
+select,
+textarea {
   max-width: 100%;
 }
 
@@ -76,7 +108,95 @@ img {
 }
 
 @media (max-width: 767px) {
+  app-home .popular__products--desktop {
+    display: none !important;
+  }
+
+  app-home .popular__products--mobile {
+    display: grid !important;
+  }
+
   :root {
     --page-padding: 16px;
+  }
+
+  app-home .categories.categories {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding-block-end: 4px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  app-home .categories.categories::-webkit-scrollbar {
+    display: none;
+  }
+
+  app-home .categories > .category-card {
+    flex: 0 0 calc((100% - 16px) / 2);
+    scroll-snap-align: start;
+  }
+
+  app-home .promotions.promotions .promotion.promotion > div {
+    inset-inline-start: 50%;
+    inset-inline-end: auto;
+    width: min(240px, calc(100% - 32px));
+    text-align: center;
+    transform: translateX(-50%);
+  }
+
+  app-home .about.about .about__photos.about__photos {
+    grid-template-columns: minmax(0, 212fr) minmax(0, 124fr);
+    gap: 8px;
+    height: auto;
+    align-items: start;
+  }
+
+  app-home .about.about .about__main-photo.about__main-photo {
+    height: auto;
+    aspect-ratio: 211.932 / 242.464;
+  }
+
+  app-home .about.about .about__main-photo.about__main-photo::before {
+    inset-block-start: 4px;
+    inset-inline-start: 6px;
+    width: 81.6%;
+    height: auto;
+    aspect-ratio: 172.951 / 233.491;
+    border-width: 2.6px;
+    border-radius: 32px 77px 77px;
+    transform: rotate(3.09deg);
+  }
+
+  app-home .about.about .about__main-photo.about__main-photo > img {
+    inset-block-start: 15.5px;
+    inset-inline-start: 17.7px;
+    width: calc(100% - 17.7px);
+    height: auto;
+    aspect-ratio: 194.254 / 221.27;
+    border-radius: 32px 77px 77px;
+    object-position: center 30%;
+  }
+
+  app-home .about.about .about__small-photos.about__small-photos {
+    grid-template-rows: auto auto;
+    gap: 8px;
+    padding-block-start: 10px;
+  }
+
+  app-home .about.about .about__small-photos.about__small-photos > img:first-child {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+  }
+
+  app-home .about.about .about__small-photos.about__small-photos > img:last-child {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 124.143 / 92.625;
+    border-radius: 32px 64px 64px 32px;
+    object-position: center 30%;
   }
 }

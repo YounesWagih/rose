@@ -12,12 +12,12 @@ import {
   Subject,
   switchMap
 } from 'rxjs';
-import { CategoryService } from '../../core/services/category.service';
 import { ProductService } from '../../core/services/product.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { Category } from '../../shared/models/category.model';
 import { Product, ProductFilters } from '../../shared/models/product.model';
 import { hasProductDiscount } from '../../shared/utils/product-price.util';
+import { Category } from '../../shared/models/category.model';
+import { CategoryService } from '../../core/services/category.service';
 
 type SaleFilter = 'sale' | 'stock' | 'out' | 'discount';
 
@@ -38,6 +38,7 @@ export class CategoryComponent implements OnInit {
   products = signal<Product[]>([]);
   isLoading = signal(true);
   errorMessage = signal('');
+  filtersOpen = signal(false);
 
   searchControl = new FormControl('', { nonNullable: true });
   priceControl = new FormControl(5000, { nonNullable: true });
@@ -139,6 +140,10 @@ export class CategoryComponent implements OnInit {
 
   applyFilters() {
     this.filtersChanged.next();
+  }
+
+  toggleFilters() {
+    this.filtersOpen.update((open) => !open);
   }
 
   goToPage(page: number) {

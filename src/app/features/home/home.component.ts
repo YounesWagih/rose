@@ -6,11 +6,11 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CategoryService } from '../../core/services/category.service';
 import { ProductService } from '../../core/services/product.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { Category } from '../../shared/models/category.model';
 import { Product } from '../../shared/models/product.model';
+import { Category } from '../../shared/models/category.model';
+import { CategoryService } from '../../core/services/category.service';
 import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
 
@@ -37,6 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
   currentBanner = signal(0);
   premiumStart = 0;
+  popularMobileIndices = [0, 1, 2];
   reviewStart = 0;
 
   reviews = [
@@ -118,6 +119,39 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  getPopularProducts() {
+    return this.products().slice(3, 15);
+  }
+
+  getPopularMobileProducts() {
+    const products = this.getPopularProducts();
+
+    return this.popularMobileIndices
+      .slice(0, Math.min(3, products.length))
+      .map((productIndex) => products[productIndex % products.length]);
+  }
+
+  movePopularProduct(cardIndex: number, direction: number) {
+    const productCount = this.getPopularProducts().length;
+    if (productCount <= 1) return;
+
+    const occupiedIndices = new Set(
+      this.popularMobileIndices
+        .slice(0, Math.min(3, productCount))
+        .filter((_, index) => index !== cardIndex)
+        .map((index) => index % productCount),
+    );
+    let nextIndex = this.popularMobileIndices[cardIndex] % productCount;
+
+    do {
+      nextIndex = this.moveIndex(nextIndex, direction, productCount);
+    } while (occupiedIndices.has(nextIndex));
+
+    this.popularMobileIndices = this.popularMobileIndices.map((index, position) =>
+      position === cardIndex ? nextIndex : index,
+    );
+  }
+
   getReviews() {
     return this.reviews.map(
       (_, index) =>
@@ -131,6 +165,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       direction,
       this.reviews.length,
     );
+  }
+
+  isPopularCategoryActive(name: string, isFirst: boolean) {
+    const hasGiftsBox = this.categories().some(
+      (category) => category.name.trim().toLowerCase() === 'gifts box',
+    );
+
+    return name.trim().toLowerCase() === 'gifts box' || (!hasGiftsBox && isFirst);
   }
 
   private moveIndex(current: number, direction: number, length: number) {

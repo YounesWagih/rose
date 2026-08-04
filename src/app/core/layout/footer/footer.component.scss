@@ -100,17 +100,53 @@
 }
 
 @media (max-width: 767px) {
+  .footer {
+    min-height: 216px;
+    padding-block: 16px;
+  }
+
   .footer__links {
-    flex-wrap: wrap;
-    gap: 8px 24px;
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 8px;
     padding-inline: 16px;
+    scrollbar-width: none;
+  }
+
+  .footer__links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .footer__links a {
+    flex: 0 0 auto;
+  }
+
+  .footer__content {
+    margin-block-start: 16px;
   }
 
   .footer__content h2 {
-    font-size: 24px;
+    font-size: 20px;
+  }
+
+  .footer__content p {
+    margin: 8px 0 16px;
   }
 
   .footer form {
+    height: 48px;
     width: calc(100% - 32px);
+    border-radius: 10px;
+  }
+
+  .footer input {
+    padding-inline: 14px;
+    font-size: 12px;
+  }
+
+  .footer button {
+    width: 103px;
+    border-radius: 10px;
+    font-size: 12px;
   }
 }

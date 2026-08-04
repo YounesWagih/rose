@@ -159,9 +159,26 @@
 
     <section id="popular" class="popular home-container">
       <h2 class="section-title">Popular Items</h2>
-      <div class="popular__products">
-        @for (product of products().slice(3, 15); track product._id) {
+      <ul class="popular__categories" aria-label="Popular product categories">
+        @for (category of categories(); track category._id; let first = $first) {
+          <li [class.active]="isPopularCategoryActive(category.name, first)">
+            {{ category.name }}
+          </li>
+        }
+      </ul>
+      <div class="popular__products popular__products--desktop">
+        @for (product of getPopularProducts(); track product._id) {
           <app-product-card [product]="product" />
+        }
+      </div>
+      <div class="popular__products popular__products--mobile">
+        @for (product of getPopularMobileProducts(); track $index; let index = $index) {
+          <app-product-card
+            [product]="product"
+            [showNavigation]="true"
+            (previous)="movePopularProduct(index, -1)"
+            (next)="movePopularProduct(index, 1)"
+          />
         }
       </div>
     </section>
@@ -271,5 +288,9 @@
         }
       </div>
     </div>
+    <a class="shop-button trusted__button" routerLink="/category">
+      View All Brands
+      <img src="assets/icons/arrow-right.svg" alt="" />
+    </a>
   </section>
 </div>
