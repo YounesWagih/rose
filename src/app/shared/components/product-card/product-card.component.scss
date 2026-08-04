@@ -63,6 +63,11 @@
   background: var(--color-primary);
 }
 
+.product-card__actions button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .product-card__actions img {
   width: 23px;
   height: 23px;

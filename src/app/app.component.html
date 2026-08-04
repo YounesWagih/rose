@@ -1,4 +1,4 @@
-<app-header (loginRequested)="isLoginOpen = true" />
+<app-header />
 
 <main>
   <router-outlet />
@@ -6,6 +6,6 @@
 
 <app-footer />
 
-@if (isLoginOpen) {
-  <app-login-popup (closed)="isLoginOpen = false" />
+@if (loginPopup.isOpen()) {
+  <app-login-popup (closed)="loginPopup.close()" />
 }

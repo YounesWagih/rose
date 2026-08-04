@@ -14,8 +14,17 @@
       >
         <img src="assets/icons/product-eye.svg" alt="" />
       </button>
-      <button type="button" title="Add to wishlist">
-        <img src="assets/icons/product-heart.svg" alt="" />
+      <button
+        type="button"
+        [title]="wishlist.isInWishlist(product._id) ? 'Remove from wishlist' : 'Add to wishlist'"
+        [disabled]="wishlist.isUpdating()"
+        (click)="toggleWishlist()"
+      >
+        @if (wishlist.isInWishlist(product._id)) {
+          <img src="assets/icons/product-remove.svg" alt="" />
+        } @else {
+          <img src="assets/icons/product-heart.svg" alt="" />
+        }
       </button>
     </div>
   </div>

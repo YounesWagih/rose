@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './core/layout/header/header.component';
 import { FooterComponent } from './core/layout/footer/footer.component';
+import { LoginPopupService } from './core/services/login-popup.service';
 import { LoginPopupComponent } from './features/auth/login-popup/login-popup.component';
 
 @Component({
@@ -11,5 +12,5 @@ import { LoginPopupComponent } from './features/auth/login-popup/login-popup.com
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  isLoginOpen = false;
+  readonly loginPopup = inject(LoginPopupService);
 }

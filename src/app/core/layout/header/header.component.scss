@@ -115,6 +115,26 @@
   height: 21px;
 }
 
+.wishlist-indicator {
+  position: relative;
+}
+
+.wishlist-indicator__count {
+  position: absolute;
+  inset-block-start: -9px;
+  inset-inline-end: 0;
+  display: grid;
+  min-width: 18px;
+  height: 18px;
+  place-items: center;
+  border-radius: 50px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: 12px;
+  line-height: 18px;
+  padding-inline: 5px;
+}
+
 .user-button {
   cursor: pointer;
 }

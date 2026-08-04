@@ -3,8 +3,11 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { AuthService } from '../../core/auth/auth.service';
 import { CategoryService } from '../../core/services/category.service';
+import { LoginPopupService } from '../../core/services/login-popup.service';
 import { ProductService } from '../../core/services/product.service';
+import { WishlistService } from '../../core/services/wishlist.service';
 import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
 import { Product, ProductCardItem } from '../../shared/models/product.model';
 import {
@@ -24,6 +27,9 @@ export class ProductDetailsComponent implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly categoryService = inject(CategoryService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly auth = inject(AuthService);
+  private readonly loginPopup = inject(LoginPopupService);
+  readonly wishlist = inject(WishlistService);
 
   product = signal<Product | null>(null);
   productImages = signal<string[]>([]);
@@ -99,5 +105,20 @@ export class ProductDetailsComponent implements OnInit {
     if (product && this.quantity < product.quantity) {
       this.quantity++;
     }
+  }
+
+  toggleWishlist(): void {
+    const product = this.product();
+
+    if (!product) {
+      return;
+    }
+
+    if (!this.auth.isAuthenticated()) {
+      this.loginPopup.open();
+      return;
+    }
+
+    this.wishlist.toggle(product._id);
   }
 }

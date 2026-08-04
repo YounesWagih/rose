@@ -261,6 +261,16 @@
   height: 45px;
 }
 
+.add-to-wishlist .add-to-wishlist__remove {
+  width: 24px;
+  height: 24px;
+}
+
+.add-to-wishlist:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
 .related-products {
   margin-block-start: 80px;
 }

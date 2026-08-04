@@ -1,12 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Output,
-  signal
-} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../auth/auth.service';
+import { LoginPopupService } from '../../services/login-popup.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-header',
@@ -16,15 +12,15 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class HeaderComponent {
   readonly auth = inject(AuthService);
-
-  @Output() readonly loginRequested = new EventEmitter<void>();
+  readonly wishlist = inject(WishlistService);
+  private readonly loginPopup = inject(LoginPopupService);
 
   readonly isMenuOpen = signal(false);
   readonly isUserMenuOpen = signal(false);
 
   openLogin(): void {
     this.closeMenus();
-    this.loginRequested.emit();
+    this.loginPopup.open();
   }
 
   toggleMenu(): void {

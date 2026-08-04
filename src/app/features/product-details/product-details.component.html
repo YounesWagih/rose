@@ -90,8 +90,22 @@
             <img src="assets/product-details/cart.svg" alt="" />
             Add To Cart
           </button>
-          <button class="add-to-wishlist" type="button" title="Add to wishlist">
-            <img src="assets/product-details/heart.svg" alt="" />
+          <button
+            class="add-to-wishlist"
+            type="button"
+            [title]="wishlist.isInWishlist(productData._id) ? 'Remove from wishlist' : 'Add to wishlist'"
+            [disabled]="wishlist.isUpdating()"
+            (click)="toggleWishlist()"
+          >
+            @if (wishlist.isInWishlist(productData._id)) {
+              <img
+                class="add-to-wishlist__remove"
+                src="assets/icons/product-remove.svg"
+                alt=""
+              />
+            } @else {
+              <img src="assets/product-details/heart.svg" alt="" />
+            }
           </button>
         </div>
       </div>
