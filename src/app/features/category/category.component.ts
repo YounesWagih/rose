@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   catchError,
   debounceTime,
@@ -31,6 +32,7 @@ export class CategoryComponent implements OnInit {
   private readonly categoryService = inject(CategoryService);
   private readonly productService = inject(ProductService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly route = inject(ActivatedRoute);
 
   categories = signal<Category[]>([]);
   products = signal<Product[]>([]);
@@ -62,6 +64,9 @@ export class CategoryComponent implements OnInit {
   private priceLimitLoaded = false;
 
   ngOnInit() {
+    const categoryId = this.route.snapshot.queryParamMap.get('category');
+    if (categoryId) this.selectedCategories.add(categoryId);
+
     this.loadCategories();
 
     merge(

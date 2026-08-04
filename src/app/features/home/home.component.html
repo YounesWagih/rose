@@ -1,7 +1,11 @@
 <div class="home">
   <section class="categories home-container">
     @for (category of categories(); track category._id) {
-      <article class="category-card">
+      <a
+        class="category-card"
+        routerLink="/category"
+        [queryParams]="{ category: category._id }"
+      >
         <div class="category-card__image">
           <img [src]="category.image" [alt]="category.name" />
         </div>
@@ -9,7 +13,7 @@
           <h2>{{ category.name }}</h2>
           <p>{{ category.productsCount }} Items</p>
         </div>
-      </article>
+      </a>
     }
   </section>
 

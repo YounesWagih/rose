@@ -12,10 +12,11 @@ import { ProductCardComponent } from '../../shared/components/product-card/produ
 import { Category } from '../../shared/models/category.model';
 import { Product } from '../../shared/models/product.model';
 import { forkJoin } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
