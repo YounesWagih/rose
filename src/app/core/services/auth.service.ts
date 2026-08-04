@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { finalize, tap } from 'rxjs';
-import { AuthResponse, LoginRequest } from './auth.models';
+import { AuthResponse, LoginRequest } from '../models/auth.models';
 import { AuthStorageService } from './auth-storage.service';
 import { AUTH_API_URL } from '../constants/api.constants';
 

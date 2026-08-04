@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs';
-import { WishlistResponse } from '../../shared/models/wishlist.model';
-import { AuthService } from '../auth/auth.service';
+import { WishlistResponse } from '../models/wishlist.model';
+import { AuthService } from './auth.service';
 import { API_BASE_URL } from '../constants/api.constants';
 
 @Injectable({ providedIn: 'root' })

@@ -3,18 +3,18 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
-import { AuthService } from '../../core/auth/auth.service';
-import { CartService } from '../../core/services/cart.service';
-import { CategoryService } from '../../core/services/category.service';
-import { LoginPopupService } from '../../core/services/login-popup.service';
-import { ProductService } from '../../core/services/product.service';
-import { WishlistService } from '../../core/services/wishlist.service';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { Product, ProductCardItem } from '../../shared/models/product.model';
+import { AuthService } from '../../../../core/services/auth.service';
+import { CartService } from '../../../../core/services/cart.service';
+import { ProductService } from '../../../../core/services/product.service';
+import { WishlistService } from '../../../../core/services/wishlist.service';
+import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { Product, ProductCardItem } from '../../../../shared/models/product.model';
 import {
   getCurrentProductPrice,
   hasProductDiscount
-} from '../../shared/utils/product-price.util';
+} from '../../../../shared/utils/product-price.util';
+import { LoginPopupService } from '../../../auth/services/login-popup.service';
+import { CategoryService } from '../../../category/services/category.service';
 
 @Component({
   selector: 'app-product-details',

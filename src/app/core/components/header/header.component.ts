@@ -10,9 +10,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
-import { LoginPopupService } from '../../services/login-popup.service';
+import { LoginPopupService } from '../../../features/auth/services/login-popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 
 @Component({

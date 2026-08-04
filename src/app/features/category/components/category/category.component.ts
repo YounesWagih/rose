@@ -12,12 +12,12 @@ import {
   Subject,
   switchMap
 } from 'rxjs';
-import { ProductService } from '../../core/services/product.service';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { Product, ProductFilters } from '../../shared/models/product.model';
-import { hasProductDiscount } from '../../shared/utils/product-price.util';
-import { Category } from '../../shared/models/category.model';
-import { CategoryService } from '../../core/services/category.service';
+import { ProductService } from '../../../../core/services/product.service';
+import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { Product, ProductFilters } from '../../../../shared/models/product.model';
+import { hasProductDiscount } from '../../../../shared/utils/product-price.util';
+import { Category } from '../../models/category.model';
+import { CategoryService } from '../../services/category.service';
 
 type SaleFilter = 'sale' | 'stock' | 'out' | 'discount';
 

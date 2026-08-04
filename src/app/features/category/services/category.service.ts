@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CategoriesResponse, CategoryResponse } from '../../shared/models/category.model';
-import { API_BASE_URL } from '../constants/api.constants';
+import { API_BASE_URL } from '../../../core/constants/api.constants';
+import { CategoriesResponse, CategoryResponse } from '../models/category.model';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {

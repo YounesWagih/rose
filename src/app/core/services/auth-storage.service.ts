@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthResponse } from './auth.models';
+import { AuthResponse } from '../models/auth.models';
 
 const AUTH_SESSION_KEY = 'rose.auth.session';
 

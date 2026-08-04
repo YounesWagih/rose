@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { finalize } from 'rxjs';
-import { CartResponse } from '../../shared/models/cart.model';
-import { AuthService } from '../auth/auth.service';
+import { CartResponse } from '../models/cart.model';
+import { AuthService } from './auth.service';
 import { API_BASE_URL } from '../constants/api.constants';
 
 @Injectable({ providedIn: 'root' })

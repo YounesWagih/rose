@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './core/layout/header/header.component';
-import { FooterComponent } from './core/layout/footer/footer.component';
-import { LoginPopupService } from './core/services/login-popup.service';
-import { LoginPopupComponent } from './features/auth/login-popup/login-popup.component';
+import { HeaderComponent } from './core/components/header/header.component';
+import { FooterComponent } from './core/components/footer/footer.component';
+import { LoginPopupComponent } from './features/auth/components/login-popup/login-popup.component';
+import { LoginPopupService } from './features/auth/services/login-popup.service';
 
 @Component({
   selector: 'app-root',

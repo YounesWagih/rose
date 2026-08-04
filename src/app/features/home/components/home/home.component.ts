@@ -6,11 +6,11 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ProductService } from '../../core/services/product.service';
-import { ProductCardComponent } from '../../shared/components/product-card/product-card.component';
-import { Product } from '../../shared/models/product.model';
-import { Category } from '../../shared/models/category.model';
-import { CategoryService } from '../../core/services/category.service';
+import { ProductService } from '../../../../core/services/product.service';
+import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
+import { Product } from '../../../../shared/models/product.model';
+import { Category } from '../../../category/models/category.model';
+import { CategoryService } from '../../../category/services/category.service';
 import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
 

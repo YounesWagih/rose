@@ -9,9 +9,9 @@ import {
   signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/auth/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { CartService } from '../../../core/services/cart.service';
-import { LoginPopupService } from '../../../core/services/login-popup.service';
+import { LoginPopupService } from '../../../features/auth/services/login-popup.service';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { ProductCardItem } from '../../models/product.model';
 import {
