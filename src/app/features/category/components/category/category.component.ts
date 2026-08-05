@@ -3,14 +3,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
-  catchError,
   debounceTime,
   distinctUntilChanged,
   merge,
-  of,
   startWith,
-  Subject,
-  switchMap
+  Subject
 } from 'rxjs';
 import { ProductService } from '../../../../core/services/product.service';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
@@ -78,25 +75,9 @@ export class CategoryComponent implements OnInit {
       .pipe(
         startWith(''),
         debounceTime(300),
-        switchMap(() => {
-          this.isLoading.set(true);
-          this.errorMessage.set('');
-          this.currentPage = 1;
-
-          return this.productService.getProducts(this.getApiFilters()).pipe(
-            catchError(() => {
-              this.errorMessage.set('Could not load products.');
-              return of({ products: [] });
-            })
-          );
-        }),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((response) => {
-        this.products.set(response.products);
-        this.setInitialPriceLimit(response.products);
-        this.isLoading.set(false);
-      });
+      .subscribe(() => this.loadProducts());
   }
 
   getFilteredProducts() {
@@ -189,6 +170,25 @@ export class CategoryComponent implements OnInit {
     this.priceLimit = Math.ceil(Math.max(...prices, 1));
     this.priceControl.setValue(this.priceLimit, { emitEvent: false });
     this.priceLimitLoaded = true;
+  }
+
+  private loadProducts(): void {
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+    this.currentPage = 1;
+
+    this.productService.getProducts(this.getApiFilters()).subscribe({
+      next: (response) => {
+        this.products.set(response.products);
+        this.setInitialPriceLimit(response.products);
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.products.set([]);
+        this.errorMessage.set('Could not load products.');
+        this.isLoading.set(false);
+      }
+    });
   }
 
   private loadCategories() {
