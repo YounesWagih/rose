@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal 
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CartService } from '../../../../core/services/cart.service';
 import { ProductService } from '../../../../core/services/product.service';
@@ -18,7 +19,7 @@ import { CategoryService } from '../../../category/services/category.service';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CurrencyPipe, ProductCardComponent, RouterLink],
+  imports: [CurrencyPipe, ProductCardComponent, RouterLink, CarouselModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,6 +45,22 @@ export class ProductDetailsComponent implements OnInit {
   colors = ['#606ddd', '#4caf50', '#17a2b8', '#ffc107', '#f44336'];
   hasDiscount = hasProductDiscount;
   currentPrice = getCurrentProductPrice;
+  readonly relatedCarouselOptions: OwlOptions = {
+    loop: true,
+    nav: false,
+    dots: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    smartSpeed: 500,
+    margin: 24,
+    responsive: {
+      0: { items: 1, margin: 16 },
+      600: { items: 2, margin: 24 },
+      900: { items: 3, margin: 24 },
+      1200: { items: 4, margin: 24 }
+    }
+  };
 
   ngOnInit() {
     this.route.paramMap

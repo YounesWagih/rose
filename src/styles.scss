@@ -47,6 +47,75 @@ app-home .popular__products--mobile {
   display: none !important;
 }
 
+app-home .hero-banner__carousel .owl-dots {
+  position: absolute;
+  inset-block-end: 24px;
+  inset-inline-start: 50%;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  transform: translateX(-50%);
+}
+
+app-home .hero-banner__carousel .owl-nav {
+  display: none;
+}
+
+app-home .hero-banner__carousel .owl-dots .owl-dot span,
+app-home .reviews__carousel .owl-dots .owl-dot span {
+  width: 8px;
+  height: 8px;
+  margin: 0;
+  background: var(--color-white);
+  transition: width 200ms ease, background-color 200ms ease;
+}
+
+app-home .hero-banner__carousel .owl-dots .owl-dot.active span,
+app-home .reviews__carousel .owl-dots .owl-dot.active span {
+  width: 24px;
+  border-radius: 20px;
+  background: var(--color-primary);
+}
+
+app-home .hero-banner__carousel .owl-carousel,
+app-home .hero-banner__carousel .owl-stage-outer,
+app-home .hero-banner__carousel .owl-stage,
+app-home .hero-banner__carousel .owl-item {
+  height: 100% !important;
+}
+
+app-home .hero-banner__carousel .owl-stage {
+  display: flex;
+  height: 440px !important;
+}
+
+app-home .hero-banner__carousel .owl-item {
+  float: none;
+}
+
+app-home .premium__carousel .owl-stage,
+app-home .reviews__carousel .owl-stage,
+app-home .trusted__carousel .owl-stage {
+  display: flex;
+}
+
+app-home .premium__carousel .owl-item,
+app-home .reviews__carousel .owl-item {
+  display: flex;
+  min-width: 0;
+}
+
+app-home .reviews__carousel .owl-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-block-start: 28px;
+}
+
+app-home .trusted__carousel .owl-stage {
+  align-items: center;
+}
+
 app-home .promotion--jewelry::after {
   position: absolute;
   inset: 0;
@@ -114,6 +183,18 @@ textarea {
 
   app-home .popular__products--mobile {
     display: grid !important;
+  }
+
+  app-home .hero-banner__carousel .owl-dots {
+    display: none;
+  }
+
+  app-home .hero-banner__carousel .owl-stage {
+    height: 210px !important;
+  }
+
+  app-home .reviews__carousel .owl-dots {
+    margin-block-start: 16px;
   }
 
   :root {

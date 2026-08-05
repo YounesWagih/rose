@@ -30,8 +30,24 @@
       </div>
     </article>
 
-    <article class="hero-banner">
-      <img [src]="heroBanners[currentBanner()]" alt="Rose gift shop banner" />
+    <article
+      class="hero-banner"
+      (focusin)="pauseAutoplay(heroCarousel)"
+      (focusout)="resumeAutoplay(heroCarousel)"
+    >
+      <owl-carousel-o
+        #heroCarousel
+        class="hero-banner__carousel"
+        [options]="heroCarouselOptions"
+      >
+        @for (banner of heroBanners; track banner; let index = $index) {
+          <ng-template carouselSlide [id]="'hero-' + index">
+            <div class="hero-banner__slide">
+              <img [src]="banner" [alt]="'Rose gift shop banner ' + (index + 1)" />
+            </div>
+          </ng-template>
+        }
+      </owl-carousel-o>
       <div class="hero-banner__copy">
         <p>BEST GIFT SHOP</p>
         <h2>Choose Perfect <span>Gifts</span> From Us</h2>
@@ -44,20 +60,11 @@
           <img src="assets/icons/arrow-right.svg" alt="" />
         </a>
       </div>
-      <div class="hero-banner__dots">
-        @for (banner of heroBanners; track banner; let index = $index) {
-          <button
-            type="button"
-            [class.active]="index === currentBanner()"
-            (click)="showBanner(index)"
-          ></button>
-        }
-      </div>
       <div class="hero-banner__arrows">
-        <button type="button" (click)="moveBanner(-1)">
+        <button type="button" (click)="heroCarousel.prev()">
           <img src="assets/icons/chevron-left.svg" alt="Previous banner" />
         </button>
-        <button type="button" (click)="moveBanner(1)">
+        <button type="button" (click)="heroCarousel.next()">
           <img src="assets/icons/chevron-right.svg" alt="Next banner" />
         </button>
       </div>
@@ -136,21 +143,29 @@
         <button
           class="premium__arrow premium__arrow--previous"
           type="button"
-          (click)="moveProducts(-1)"
+          (click)="premiumCarousel.prev()"
         >
           <img src="assets/icons/chevron-left.svg" alt="Previous products" />
         </button>
 
-        <div class="premium__grid">
-          @for (product of getPremiumProducts(); track product._id) {
-            <app-product-card [product]="product" />
+        <owl-carousel-o
+          #premiumCarousel
+          class="premium__carousel"
+          [options]="premiumCarouselOptions"
+        >
+          @for (product of products(); track product._id) {
+            <ng-template carouselSlide [id]="'premium-' + product._id">
+              <div class="premium__slide">
+                <app-product-card [product]="product" />
+              </div>
+            </ng-template>
           }
-        </div>
+        </owl-carousel-o>
 
         <button
           class="premium__arrow premium__arrow--next"
           type="button"
-          (click)="moveProducts(1)"
+          (click)="premiumCarousel.next()"
         >
           <img src="assets/icons/chevron-right.svg" alt="Next products" />
         </button>
@@ -236,57 +251,78 @@
 
   <section class="reviews">
     <img class="reviews__background" src="assets/home/reviews/reviews-bg.png" alt="" />
-    <div class="reviews__content home-container">
-      <button class="reviews__arrow" type="button" (click)="moveReviews(-1)">
+    <div
+      class="reviews__content home-container"
+      (focusin)="pauseAutoplay(reviewsCarousel)"
+      (focusout)="resumeAutoplay(reviewsCarousel)"
+    >
+      <button class="reviews__arrow" type="button" (click)="reviewsCarousel.prev()">
         <img src="assets/icons/chevron-left.svg" alt="Previous reviews" />
       </button>
 
-      <div class="reviews__grid">
-        @for (review of getReviews(); track review.image) {
-          <article class="review-card">
-            <div class="review-card__person">
-              <div class="review-card__avatar">
-                <img [src]="review.image" [alt]="review.name" />
+      <owl-carousel-o
+        #reviewsCarousel
+        class="reviews__carousel"
+        [options]="reviewsCarouselOptions"
+      >
+        @for (review of reviews; track review.image) {
+          <ng-template carouselSlide [id]="'review-' + review.image">
+            <article class="review-card">
+              <div class="review-card__person">
+                <div class="review-card__avatar">
+                  <img [src]="review.image" [alt]="review.name" />
+                </div>
+                <div>
+                  <h3>{{ review.name }}</h3>
+                  <p>{{ review.role }}</p>
+                </div>
               </div>
-              <div>
-                <h3>{{ review.name }}</h3>
-                <p>{{ review.role }}</p>
+              <p class="review-card__text">
+                Ab Vel Consequatur Repellat Eos Omnis Accusamus Porro Sunt
+                Dolorem. Totam Voluptas Ullam Ut. Neque Accusantium Voluptas
+                Rerum. Dolorem Veritatis Quo Omnis Nihil Nulla Harum Eum.
+                Dignissimos Laborum Necessitatibus Vero Nihil.
+              </p>
+              <div class="review-card__stars">
+                @for (star of [1, 2, 3, 4]; track star) {
+                  <img src="assets/home/reviews/review-star.svg" alt="" />
+                }
               </div>
-            </div>
-            <p class="review-card__text">
-              Ab Vel Consequatur Repellat Eos Omnis Accusamus Porro Sunt
-              Dolorem. Totam Voluptas Ullam Ut. Neque Accusantium Voluptas
-              Rerum. Dolorem Veritatis Quo Omnis Nihil Nulla Harum Eum.
-              Dignissimos Laborum Necessitatibus Vero Nihil.
-            </p>
-            <div class="review-card__stars">
-              @for (star of [1, 2, 3, 4]; track star) {
-                <img src="assets/home/reviews/review-star.svg" alt="" />
-              }
-            </div>
-            <img class="review-card__chat" src="assets/home/reviews/review-chat.svg" alt="" />
-          </article>
+              <img class="review-card__chat" src="assets/home/reviews/review-chat.svg" alt="" />
+            </article>
+          </ng-template>
         }
-      </div>
+      </owl-carousel-o>
 
-      <button class="reviews__arrow" type="button" (click)="moveReviews(1)">
+      <button class="reviews__arrow" type="button" (click)="reviewsCarousel.next()">
         <img src="assets/icons/chevron-right.svg" alt="Next reviews" />
       </button>
     </div>
-    <img class="reviews__dots" src="assets/home/reviews/review-dots.svg" alt="" />
   </section>
 
   <section class="trusted home-container">
     <h2 class="section-title">Trusted By Over <span>4.5k+</span> Companies</h2>
-    <div class="trusted__logos">
-      <div class="trusted__track">
+    <div
+      class="trusted__logos"
+      (focusin)="pauseAutoplay(trustedCarousel)"
+      (focusout)="resumeAutoplay(trustedCarousel)"
+    >
+      <owl-carousel-o
+        #trustedCarousel
+        class="trusted__carousel"
+        [options]="trustedCarouselOptions"
+      >
         @for (company of trustedCompanies; track company) {
-          <img [src]="'assets/home/trusted/trusted-' + company + '.png'" [alt]="'Trusted company ' + company" />
+          <ng-template carouselSlide [id]="'trusted-' + company">
+            <div class="trusted__logo">
+              <img
+                [src]="'assets/home/trusted/trusted-' + company + '.png'"
+                [alt]="'Trusted company ' + company"
+              />
+            </div>
+          </ng-template>
         }
-        @for (company of trustedCompanies; track company) {
-          <img [src]="'assets/home/trusted/trusted-' + company + '.png'" alt="" />
-        }
-      </div>
+      </owl-carousel-o>
     </div>
     <a class="shop-button trusted__button" routerLink="/category">
       View All Brands

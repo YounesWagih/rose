@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -13,18 +12,23 @@ import { CategoryService } from '../../../category/services/category.service';
 import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import {
+  CarouselComponent,
+  CarouselModule,
+  OwlOptions,
+} from 'ngx-owl-carousel-o';
+import {
   adaptCategoryToCard,
   CategoryCard,
 } from '../../adapters/category-card.adapter';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductCardComponent, RouterLink],
+  imports: [ProductCardComponent, RouterLink, CarouselModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
 
@@ -38,10 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/home/hero-banner-2.png',
     'assets/home/hero-banner-3.png',
   ];
-  currentBanner = signal(0);
-  premiumStart = 0;
   popularMobileIndices = [0, 1, 2];
-  reviewStart = 0;
 
   reviews = [
     {
@@ -67,11 +68,81 @@ export class HomeComponent implements OnInit, OnDestroy {
   ];
 
   trustedCompanies = [1, 2, 3, 4, 5, 6];
-  private bannerTimer?: ReturnType<typeof setInterval>;
+  private readonly prefersReducedMotion =
+    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+
+  readonly heroCarouselOptions: OwlOptions = {
+    items: 1,
+    loop: false,
+    rewind: true,
+    nav: true,
+    navText: [
+      '<img src="assets/icons/chevron-left.svg" alt="Previous banner">',
+      '<img src="assets/icons/chevron-right.svg" alt="Next banner">',
+    ],
+    dots: true,
+    autoHeight: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    smartSpeed: 600,
+    autoplay: !this.prefersReducedMotion,
+    autoplayTimeout: 5000,
+    autoplaySpeed: 600,
+    autoplayHoverPause: true,
+  };
+
+  readonly premiumCarouselOptions: OwlOptions = {
+    loop: true,
+    nav: false,
+    dots: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    smartSpeed: 500,
+    margin: 24,
+    responsive: {
+      0: { items: 1 },
+      500: { items: 2 },
+      900: { items: 3 },
+    },
+  };
+
+  readonly reviewsCarouselOptions: OwlOptions = {
+    loop: true,
+    nav: false,
+    dots: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    smartSpeed: 500,
+    margin: 24,
+    responsive: {
+      0: { items: 1, margin: 16 },
+      600: { items: 2, margin: 24 },
+      1050: { items: 4, margin: 24 },
+    },
+  };
+
+  readonly trustedCarouselOptions: OwlOptions = {
+    loop: true,
+    nav: false,
+    dots: false,
+    smartSpeed: 1800,
+    autoplay: true,
+    autoplayTimeout: 1800,
+    autoplaySpeed: 1800,
+    autoplayHoverPause: false,
+    slideTransition: 'linear',
+    responsive: {
+      0: { items: 2, margin: 16 },
+      480: { items: 3, margin: 24 },
+      768: { items: 4, margin: 40 },
+      1024: { items: 5, margin: 56 },
+    },
+  };
 
   ngOnInit() {
-    this.bannerTimer = setInterval(() => this.moveBanner(1), 5000);
-
     forkJoin({
       categories: this.categoryService.getCategories(),
       products: this.productService.getProducts(),
@@ -88,40 +159,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.errorMessage.set('Could not load the home page data.');
       },
     });
-  }
-
-  ngOnDestroy() {
-    clearInterval(this.bannerTimer);
-  }
-
-  moveBanner(direction: number) {
-    this.currentBanner.set(
-      this.moveIndex(
-        this.currentBanner(),
-        direction,
-        this.heroBanners.length,
-      ),
-    );
-  }
-
-  showBanner(index: number) {
-    this.currentBanner.set(index);
-  }
-
-  getPremiumProducts() {
-    const products = this.products();
-    return Array.from(
-      { length: Math.min(3, products.length) },
-      (_, index) => products[(this.premiumStart + index) % products.length],
-    );
-  }
-
-  moveProducts(direction: number) {
-    this.premiumStart = this.moveIndex(
-      this.premiumStart,
-      direction,
-      this.products().length,
-    );
   }
 
   getPopularProducts() {
@@ -157,27 +194,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  getReviews() {
-    return this.reviews.map(
-      (_, index) =>
-        this.reviews[(this.reviewStart + index) % this.reviews.length],
-    );
-  }
-
-  moveReviews(direction: number) {
-    this.reviewStart = this.moveIndex(
-      this.reviewStart,
-      direction,
-      this.reviews.length,
-    );
-  }
-
   isPopularCategoryActive(name: string, isFirst: boolean) {
     const hasGiftsBox = this.categories().some(
       (category) => category.name.trim().toLowerCase() === 'gifts box',
     );
 
     return name.trim().toLowerCase() === 'gifts box' || (!hasGiftsBox && isFirst);
+  }
+
+  pauseAutoplay(carousel: CarouselComponent) {
+    carousel.stopAutoplay();
+  }
+
+  resumeAutoplay(carousel: CarouselComponent) {
+    if (!this.prefersReducedMotion) {
+      carousel.startAutoplay();
+    }
   }
 
   private moveIndex(current: number, direction: number, length: number) {

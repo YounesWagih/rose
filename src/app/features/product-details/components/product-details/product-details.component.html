@@ -122,9 +122,36 @@
       </header>
 
       @if (relatedProducts().length > 0) {
-        <div class="related-products__grid">
-          @for (relatedProduct of relatedProducts(); track relatedProduct._id) {
-            <app-product-card [product]="relatedProduct" />
+        <div class="related-products__carousel-wrap">
+          <owl-carousel-o
+            #relatedCarousel
+            class="related-products__carousel"
+            [options]="relatedCarouselOptions"
+          >
+            @for (relatedProduct of relatedProducts(); track relatedProduct._id) {
+              <ng-template carouselSlide [id]="'related-' + relatedProduct._id">
+                <div class="related-products__slide">
+                  <app-product-card [product]="relatedProduct" />
+                </div>
+              </ng-template>
+            }
+          </owl-carousel-o>
+
+          @if (relatedProducts().length > 1) {
+            <button
+              class="related-products__arrow related-products__arrow--previous"
+              type="button"
+              (click)="relatedCarousel.prev()"
+            >
+              <img src="assets/icons/chevron-left.svg" alt="Previous related products" />
+            </button>
+            <button
+              class="related-products__arrow related-products__arrow--next"
+              type="button"
+              (click)="relatedCarousel.next()"
+            >
+              <img src="assets/icons/chevron-right.svg" alt="Next related products" />
+            </button>
           }
         </div>
       } @else {
