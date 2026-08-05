@@ -1,0 +1,59 @@
+<div class="about-page">
+  <app-about-section destination="/category" />
+  <app-reviews-section />
+
+  <section class="team home-container">
+    <div class="team__heading">
+      <p class="eyebrow">OUR TEAM</p>
+      <h2 class="section-title">Meet Our Expert <span>Team</span></h2>
+    </div>
+
+    <div class="team__grid">
+      @for (member of teamMembers; track $index) {
+        <article class="team-card">
+          <img
+            class="team-card__image"
+            [src]="member.image"
+            [alt]="member.name"
+          />
+          <div class="team-card__identity">
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.role }}</p>
+          </div>
+
+          <div class="team-card__socials">
+            @for (social of socialLinks; track social.label) {
+              <a
+                href="#"
+                [attr.aria-label]="social.label"
+                (click)="$event.preventDefault()"
+              >
+                <img [src]="social.icon" alt="" />
+              </a>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <app-benefits-section />
+
+  <section class="instagram home-container">
+    <div class="instagram__heading">
+      <h2 class="instagram__title">
+        <span>Instagram</span>
+        <span class="instagram__brand">&#64;Rose</span>
+      </h2>
+    </div>
+    <div class="instagram__grid">
+      @for (image of instagramImages; track image) {
+        <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
+          <img [src]="image" alt="Rose gift inspiration" />
+        </a>
+      }
+    </div>
+  </section>
+
+  <app-trusted-section />
+</div>

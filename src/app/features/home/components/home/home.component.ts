@@ -4,6 +4,7 @@ import {
   inject,
   OnInit,
   signal,
+  ViewEncapsulation,
 } from '@angular/core';
 import { ProductService } from '../../../../core/services/product.service';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
@@ -20,12 +21,24 @@ import {
   adaptCategoryToCard,
   CategoryCard,
 } from '../../adapters/category-card.adapter';
+import { AboutSectionComponent } from '../../../../shared/components/about-section/about-section.component';
+import { BenefitsSectionComponent } from '../../../../shared/components/benefits-section/benefits-section.component';
+import { ReviewsSectionComponent } from '../../../../shared/components/reviews-section/reviews-section.component';
+import { TrustedSectionComponent } from '../../../../shared/components/trusted-section/trusted-section.component';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductCardComponent, RouterLink, CarouselModule],
+  imports: [
+    ProductCardComponent,
+    RouterLink,
+    CarouselModule,
+    AboutSectionComponent,
+    BenefitsSectionComponent,
+    ReviewsSectionComponent,
+    TrustedSectionComponent,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
@@ -44,32 +57,9 @@ export class HomeComponent implements OnInit {
   ];
   popularMobileIndices = [0, 1, 2];
 
-  reviews = [
-    {
-      name: 'Ahmed Mohamed',
-      role: 'Customer',
-      image: 'assets/home/reviews/review-avatar-1.png',
-    },
-    {
-      name: 'Ahmed Mohamed',
-      role: 'Customer',
-      image: 'assets/home/reviews/review-avatar-2.png',
-    },
-    {
-      name: 'Ahmed Mohamed',
-      role: 'Customer',
-      image: 'assets/home/reviews/review-avatar-3.png',
-    },
-    {
-      name: 'Ahmed Mohamed',
-      role: 'Customer',
-      image: 'assets/home/reviews/review-avatar-4.png',
-    },
-  ];
-
-  trustedCompanies = [1, 2, 3, 4, 5, 6];
   private readonly prefersReducedMotion =
-    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ??
+    false;
 
   readonly heroCarouselOptions: OwlOptions = {
     items: 1,
@@ -105,40 +95,6 @@ export class HomeComponent implements OnInit {
       0: { items: 1 },
       500: { items: 2 },
       900: { items: 3 },
-    },
-  };
-
-  readonly reviewsCarouselOptions: OwlOptions = {
-    loop: true,
-    nav: false,
-    dots: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    smartSpeed: 500,
-    margin: 24,
-    responsive: {
-      0: { items: 1, margin: 16 },
-      600: { items: 2, margin: 24 },
-      1050: { items: 4, margin: 24 },
-    },
-  };
-
-  readonly trustedCarouselOptions: OwlOptions = {
-    loop: true,
-    nav: false,
-    dots: false,
-    smartSpeed: 1800,
-    autoplay: true,
-    autoplayTimeout: 1800,
-    autoplaySpeed: 1800,
-    autoplayHoverPause: false,
-    slideTransition: 'linear',
-    responsive: {
-      0: { items: 2, margin: 16 },
-      480: { items: 3, margin: 24 },
-      768: { items: 4, margin: 40 },
-      1024: { items: 5, margin: 56 },
     },
   };
 
@@ -189,8 +145,8 @@ export class HomeComponent implements OnInit {
       nextIndex = this.moveIndex(nextIndex, direction, productCount);
     } while (occupiedIndices.has(nextIndex));
 
-    this.popularMobileIndices = this.popularMobileIndices.map((index, position) =>
-      position === cardIndex ? nextIndex : index,
+    this.popularMobileIndices = this.popularMobileIndices.map(
+      (index, position) => (position === cardIndex ? nextIndex : index),
     );
   }
 
@@ -199,7 +155,9 @@ export class HomeComponent implements OnInit {
       (category) => category.name.trim().toLowerCase() === 'gifts box',
     );
 
-    return name.trim().toLowerCase() === 'gifts box' || (!hasGiftsBox && isFirst);
+    return (
+      name.trim().toLowerCase() === 'gifts box' || (!hasGiftsBox && isFirst)
+    );
   }
 
   pauseAutoplay(carousel: CarouselComponent) {

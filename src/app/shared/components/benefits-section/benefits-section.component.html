@@ -1,0 +1,11 @@
+<section class="benefits home-container">
+  @for (benefit of benefits; track benefit.title) {
+    <article>
+      <span><img [src]="benefit.icon" alt="" /></span>
+      <div>
+        <h2>{{ benefit.title }}</h2>
+        <p>{{ benefit.description }}</p>
+      </div>
+    </article>
+  }
+</section>

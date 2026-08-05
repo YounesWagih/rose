@@ -1,0 +1,221 @@
+.about-page {
+  padding-block: 30px 90px;
+}
+
+.about-page .about {
+  margin-block-start: 0;
+}
+
+.team {
+  margin-block-start: 80px;
+}
+
+.team__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 338px;
+  min-height: 78px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.team__heading .eyebrow {
+  margin-block-end: 8px;
+  color: var(--color-primary);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 30.6px;
+  letter-spacing: 4px;
+}
+
+.team__heading h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.team__heading h2 span {
+  color: var(--color-primary);
+}
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  margin: 40px auto 0;
+  max-width: 1280px;
+}
+
+.team-card {
+  width: 302px;
+  height: 442px;
+  min-width: 0;
+  padding: 16px 24px 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 28px;
+  background: var(--color-white);
+  box-shadow: 0 2px 4px rgb(22 14 75 / 8%);
+  text-align: center;
+}
+
+.team-card__image {
+  display: block;
+  width: 254px;
+  height: 272px;
+  border-radius: 18px 18px 0 0;
+  object-fit: cover;
+}
+
+.team-card__identity {
+  display: flex;
+  height: 46px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-card h3,
+.team-card p {
+  margin: 0;
+  font-family: var(--font-ui);
+}
+
+.team-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.team-card p {
+  color: var(--color-primary);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.team-card__socials {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  height: 36px;
+  margin-block-start: 10px;
+  padding-block-start: 0;
+  border-block-start: 1px solid #bfc3cc;
+}
+
+.team-card__socials a {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-primary);
+  text-decoration: none;
+}
+
+.team-card__socials img {
+  width: 20px;
+  height: 20px;
+}
+
+.instagram {
+  margin-block-start: 80px;
+}
+
+.instagram__heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.instagram__title {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  min-width: 256px;
+  min-height: 50px;
+  padding-block-end: 10px;
+  color: var(--color-heading);
+  font-family: var(--font-ui);
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.instagram__title::after {
+  position: absolute;
+  inset-block-end: 8px;
+  inset-inline-start: 0;
+  width: 161px;
+  height: 2px;
+  border-radius: 4px;
+  background: var(--color-primary);
+  content: '';
+}
+
+.instagram__brand {
+  color: var(--color-primary);
+  font-family: var(--font-brand);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 0.7;
+}
+
+.instagram__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+  margin-block-start: 17px;
+}
+
+.instagram__grid a,
+.instagram__grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+}
+
+.instagram__grid a {
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.instagram__grid img {
+  object-fit: cover;
+  transition: transform 200ms ease;
+}
+
+.instagram__grid a:hover img,
+.instagram__grid a:focus-visible img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 900px) {
+  .team__grid { grid-template-columns: repeat(2, minmax(0, 302px)); max-width: 628px; justify-content: center; }
+  .instagram__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 767px) {
+  .about-page { padding-block: 16px 48px; }
+  .team { margin-block-start: 48px; }
+  .team__heading { width: 100%; min-height: 0; }
+  .team__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-block-start: 24px; }
+  .team-card { width: 100%; height: auto; min-height: 300px; padding-inline: 10px; border-radius: 22px; }
+  .team-card__image { width: 100%; height: auto; aspect-ratio: 254 / 272; border-radius: 14px 14px 0 0; }
+  .team-card h3,
+  .team-card p { font-size: 10px; }
+  .instagram { margin-block-start: 48px; }
+  .instagram__title {
+    gap: 3px;
+    min-width: 0;
+    min-height: 38px;
+    padding-block-end: 7px;
+    font-size: 20px;
+  }
+  .instagram__brand { font-size: 26px; }
+  .instagram__title::after { inset-block-end: 6px; width: 180px; height: 2px; }
+  .instagram__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-block-start: 24px; }
+  .instagram__grid a, .instagram__grid img { height: 160px; }
+}

@@ -1,0 +1,23 @@
+<section class="trusted home-container">
+  <h2 class="section-title">Trusted By Over <span>4.5k+</span> Companies</h2>
+
+  <div class="trusted__logos">
+    <owl-carousel-o class="trusted__carousel" [options]="carouselOptions">
+      @for (company of companies; track company) {
+        <ng-template carouselSlide [id]="'trusted-' + company">
+          <div class="trusted__logo">
+            <img
+              [src]="'assets/home/trusted/trusted-' + company + '.png'"
+              [alt]="'Trusted company ' + company"
+            />
+          </div>
+        </ng-template>
+      }
+    </owl-carousel-o>
+  </div>
+
+  <a class="shop-button trusted__button" routerLink="/category">
+    View All Brands
+    <img src="assets/icons/arrow-right.svg" alt="" />
+  </a>
+</section>

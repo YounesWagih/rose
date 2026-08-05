@@ -20,14 +20,24 @@
       aria-label="Primary navigation"
     >
       <div class="site-nav__header">
-        <a class="site-nav__brand" routerLink="/" aria-label="Rose home" (click)="closeMenus()">
+        <a
+          class="site-nav__brand"
+          routerLink="/"
+          aria-label="Rose home"
+          (click)="closeMenus()"
+        >
           <img src="assets/brand/rose-logo.png" alt="Rose Happy Gift" />
           <span class="brand-copy" aria-hidden="true">
             <span class="brand-copy__name">Rose</span>
             <span class="brand-copy__tagline">Happy Gift</span>
           </span>
         </a>
-        <button class="site-nav__close" type="button" aria-label="Close navigation menu" (click)="closeMenu(true)">
+        <button
+          class="site-nav__close"
+          type="button"
+          aria-label="Close navigation menu"
+          (click)="closeMenu(true)"
+        >
           <span aria-hidden="true">×</span>
         </button>
       </div>
@@ -50,10 +60,13 @@
       >
         All Category
       </a>
-      <a class="nav-link" routerLink="/" fragment="about" (click)="closeMenus()">
-        About
-      </a>
-      <a class="nav-link" routerLink="/" fragment="contact" (click)="closeMenus()">
+      <a class="nav-link" routerLink="/about" (click)="closeMenus()"> About </a>
+      <a
+        class="nav-link"
+        routerLink="/"
+        fragment="contact"
+        (click)="closeMenus()"
+      >
         Contact
       </a>
     </nav>
@@ -82,7 +95,14 @@
             <span class="header-indicator__count">{{ cart.count() }}</span>
           }
         </span>
-        <button class="icon-button user-button" type="button" aria-label="Open account menu" aria-controls="account-menu" [attr.aria-expanded]="isUserMenuOpen()" (click)="toggleUserMenu()">
+        <button
+          class="icon-button user-button"
+          type="button"
+          aria-label="Open account menu"
+          aria-controls="account-menu"
+          [attr.aria-expanded]="isUserMenuOpen()"
+          (click)="toggleUserMenu()"
+        >
           <img src="assets/icons/user.svg" alt="" />
         </button>
         @if (isUserMenuOpen()) {
@@ -95,7 +115,9 @@
           </div>
         }
       } @else {
-        <button class="login-button" type="button" (click)="openLogin()">Login</button>
+        <button class="login-button" type="button" (click)="openLogin()">
+          Login
+        </button>
       }
 
       <button

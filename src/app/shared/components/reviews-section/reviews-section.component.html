@@ -1,0 +1,66 @@
+<section class="reviews">
+  <img
+    class="reviews__background"
+    src="assets/home/reviews/reviews-bg.png"
+    alt=""
+  />
+  <div
+    class="reviews__content home-container"
+    (focusin)="pauseAutoplay(reviewsCarousel)"
+    (focusout)="resumeAutoplay(reviewsCarousel)"
+  >
+    <button
+      class="reviews__arrow"
+      type="button"
+      (click)="reviewsCarousel.prev()"
+    >
+      <img src="assets/icons/chevron-left.svg" alt="Previous reviews" />
+    </button>
+
+    <owl-carousel-o
+      #reviewsCarousel
+      class="reviews__carousel"
+      [options]="carouselOptions"
+    >
+      @for (review of reviews; track review.image) {
+        <ng-template carouselSlide [id]="'review-' + review.image">
+          <article class="review-card">
+            <div class="review-card__person">
+              <div class="review-card__avatar">
+                <img [src]="review.image" [alt]="review.name" />
+              </div>
+              <div>
+                <h3>{{ review.name }}</h3>
+                <p>{{ review.role }}</p>
+              </div>
+            </div>
+            <p class="review-card__text">
+              Ab Vel Consequatur Repellat Eos Omnis Accusamus Porro Sunt
+              Dolorem. Totam Voluptas Ullam Ut. Neque Accusantium Voluptas
+              Rerum. Dolorem Veritatis Quo Omnis Nihil Nulla Harum Eum.
+              Dignissimos Laborum Necessitatibus Vero Nihil.
+            </p>
+            <div class="review-card__stars">
+              @for (star of [1, 2, 3, 4]; track star) {
+                <img src="assets/home/reviews/review-star.svg" alt="" />
+              }
+            </div>
+            <img
+              class="review-card__chat"
+              src="assets/home/reviews/review-chat.svg"
+              alt=""
+            />
+          </article>
+        </ng-template>
+      }
+    </owl-carousel-o>
+
+    <button
+      class="reviews__arrow"
+      type="button"
+      (click)="reviewsCarousel.next()"
+    >
+      <img src="assets/icons/chevron-right.svg" alt="Next reviews" />
+    </button>
+  </div>
+</section>

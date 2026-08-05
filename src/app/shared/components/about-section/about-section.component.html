@@ -1,0 +1,43 @@
+<section id="about" class="about home-container">
+  <div class="about__photos">
+    <div class="about__main-photo">
+      <img src="assets/home/about/about-main.png" alt="Purple gift box" />
+    </div>
+    <div class="about__small-photos">
+      <img src="assets/home/about/about-top.png" alt="Orange gift boxes" />
+      <img
+        src="assets/home/about/about-bottom.png"
+        alt="Small gift beneath balloons"
+      />
+    </div>
+  </div>
+
+  <div class="about__content">
+    <p class="eyebrow">ABOUT US</p>
+    <h2>
+      We Provide Best And Quality <span>Gifts</span><br /><span>Box</span>
+      Product For You
+    </h2>
+    <p class="about__description">
+      Recusandae tempora aut laborum molestias veniam. A commodi sequi
+      accusantium ullam cupiditate. Neque quidem qui et autem dolor dicta
+      necessitatibus ut ad.
+    </p>
+    <a
+      class="shop-button"
+      [routerLink]="destination.startsWith('/') ? destination : null"
+      [attr.href]="destination.startsWith('#') ? destination : null"
+    >
+      Discover More
+      <img src="assets/icons/arrow-right.svg" alt="" />
+    </a>
+
+    <div class="about__features">
+      @for (feature of features; track feature) {
+        <p>
+          <img src="assets/home/about/about-check.svg" alt="" /> {{ feature }}
+        </p>
+      }
+    </div>
+  </div>
+</section>

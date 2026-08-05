@@ -1,13 +1,24 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { SubscriptionService } from '../../services/subscription.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
   private subscriptionService = inject(SubscriptionService);
@@ -15,8 +26,8 @@ export class FooterComponent {
   subscriptionForm = new FormGroup({
     email: new FormControl('', {
       nonNullable: true,
-      validators: [Validators.required, Validators.email]
-    })
+      validators: [Validators.required, Validators.email],
+    }),
   });
   message = signal('');
 
@@ -35,7 +46,7 @@ export class FooterComponent {
         this.message.set(response.message);
         this.email.reset();
       },
-      error: () => this.message.set('Subscription failed. Please try again.')
+      error: () => this.message.set('Subscription failed. Please try again.'),
     });
   }
 }

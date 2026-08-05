@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inter:wght@400;500;600&family=Roboto:wght@400;500;600&display=swap');
+@import './app/features/home/components/home/home.component.scss';
 
 :root {
   --color-primary: #f82ba9;
@@ -38,16 +39,16 @@ body {
   overflow-x: clip;
 }
 
-app-home .about__main-photo > img,
-app-home .about__small-photos > img:last-child {
+:where(app-home, app-about) .about__main-photo > img,
+:where(app-home, app-about) .about__small-photos > img:last-child {
   object-position: center 30%;
 }
 
-app-home .popular__products--mobile {
+:where(app-home, app-about) .popular__products--mobile {
   display: none !important;
 }
 
-app-home .hero-banner__carousel .owl-dots {
+:where(app-home, app-about) .hero-banner__carousel .owl-dots {
   position: absolute;
   inset-block-end: 24px;
   inset-inline-start: 50%;
@@ -57,12 +58,12 @@ app-home .hero-banner__carousel .owl-dots {
   transform: translateX(-50%);
 }
 
-app-home .hero-banner__carousel .owl-nav {
+:where(app-home, app-about) .hero-banner__carousel .owl-nav {
   display: none;
 }
 
-app-home .hero-banner__carousel .owl-dots .owl-dot span,
-app-home .reviews__carousel .owl-dots .owl-dot span {
+:where(app-home, app-about) .hero-banner__carousel .owl-dots .owl-dot span,
+:where(app-home, app-about) .reviews__carousel .owl-dots .owl-dot span {
   width: 8px;
   height: 8px;
   margin: 0;
@@ -70,53 +71,63 @@ app-home .reviews__carousel .owl-dots .owl-dot span {
   transition: width 200ms ease, background-color 200ms ease;
 }
 
-app-home .hero-banner__carousel .owl-dots .owl-dot.active span,
-app-home .reviews__carousel .owl-dots .owl-dot.active span {
+:where(app-home, app-about) .hero-banner__carousel .owl-dots .owl-dot.active span,
+:where(app-home, app-about) .reviews__carousel .owl-dots .owl-dot.active span {
   width: 24px;
   border-radius: 20px;
   background: var(--color-primary);
 }
 
-app-home .hero-banner__carousel .owl-carousel,
-app-home .hero-banner__carousel .owl-stage-outer,
-app-home .hero-banner__carousel .owl-stage,
-app-home .hero-banner__carousel .owl-item {
+:where(app-home, app-about) .hero-banner__carousel .owl-carousel,
+:where(app-home, app-about) .hero-banner__carousel .owl-stage-outer,
+:where(app-home, app-about) .hero-banner__carousel .owl-stage,
+:where(app-home, app-about) .hero-banner__carousel .owl-item {
   height: 100% !important;
 }
 
-app-home .hero-banner__carousel .owl-stage {
+:where(app-home, app-about) .hero-banner__carousel .owl-stage {
   display: flex;
   height: 440px !important;
 }
 
-app-home .hero-banner__carousel .owl-item {
+:where(app-home, app-about) .hero-banner__carousel .owl-item {
   float: none;
 }
 
-app-home .premium__carousel .owl-stage,
-app-home .reviews__carousel .owl-stage,
-app-home .trusted__carousel .owl-stage {
+:where(app-home, app-about) .premium__carousel .owl-stage,
+:where(app-home, app-about) .reviews__carousel .owl-stage,
+:where(app-home, app-about) .trusted__carousel .owl-stage {
   display: flex;
 }
 
-app-home .premium__carousel .owl-item,
-app-home .reviews__carousel .owl-item {
+:where(app-home, app-about) .premium__carousel .owl-item,
+:where(app-home, app-about) .reviews__carousel .owl-item {
   display: flex;
   min-width: 0;
 }
 
-app-home .reviews__carousel .owl-dots {
-  display: flex;
+:where(app-home, app-about) .reviews__carousel .owl-dots {
+  display: flex !important;
   justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-block-start: 28px;
 }
 
-app-home .trusted__carousel .owl-stage {
+:where(app-home, app-about) .reviews__carousel .owl-dots .owl-dot {
+  display: grid;
+  width: auto;
+  height: auto;
+  place-items: center;
+  background: transparent;
+  padding: 0;
+}
+
+:where(app-home, app-about) .trusted__carousel .owl-stage {
   align-items: center;
 }
 
-app-home .promotion--jewelry::after {
+:where(app-home, app-about) .promotion--jewelry::after {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -177,23 +188,23 @@ textarea {
 }
 
 @media (max-width: 767px) {
-  app-home .popular__products--desktop {
+  :where(app-home, app-about) .popular__products--desktop {
     display: none !important;
   }
 
-  app-home .popular__products--mobile {
+  :where(app-home, app-about) .popular__products--mobile {
     display: grid !important;
   }
 
-  app-home .hero-banner__carousel .owl-dots {
+  :where(app-home, app-about) .hero-banner__carousel .owl-dots {
     display: none;
   }
 
-  app-home .hero-banner__carousel .owl-stage {
+  :where(app-home, app-about) .hero-banner__carousel .owl-stage {
     height: 210px !important;
   }
 
-  app-home .reviews__carousel .owl-dots {
+  :where(app-home, app-about) .reviews__carousel .owl-dots {
     margin-block-start: 16px;
   }
 
@@ -201,7 +212,7 @@ textarea {
     --page-padding: 16px;
   }
 
-  app-home .categories.categories {
+  :where(app-home, app-about) .categories.categories {
     display: flex;
     overflow-x: auto;
     gap: 16px;
@@ -210,16 +221,16 @@ textarea {
     scrollbar-width: none;
   }
 
-  app-home .categories.categories::-webkit-scrollbar {
+  :where(app-home, app-about) .categories.categories::-webkit-scrollbar {
     display: none;
   }
 
-  app-home .categories > .category-card {
+  :where(app-home, app-about) .categories > .category-card {
     flex: 0 0 calc((100% - 16px) / 2);
     scroll-snap-align: start;
   }
 
-  app-home .promotions.promotions .promotion.promotion > div {
+  :where(app-home, app-about) .promotions.promotions .promotion.promotion > div {
     inset-inline-start: 50%;
     inset-inline-end: auto;
     width: min(240px, calc(100% - 32px));
@@ -227,19 +238,19 @@ textarea {
     transform: translateX(-50%);
   }
 
-  app-home .about.about .about__photos.about__photos {
+  :where(app-home, app-about) .about.about .about__photos.about__photos {
     grid-template-columns: minmax(0, 212fr) minmax(0, 124fr);
     gap: 8px;
     height: auto;
     align-items: start;
   }
 
-  app-home .about.about .about__main-photo.about__main-photo {
+  :where(app-home, app-about) .about.about .about__main-photo.about__main-photo {
     height: auto;
     aspect-ratio: 211.932 / 242.464;
   }
 
-  app-home .about.about .about__main-photo.about__main-photo::before {
+  :where(app-home, app-about) .about.about .about__main-photo.about__main-photo::before {
     inset-block-start: 4px;
     inset-inline-start: 6px;
     width: 81.6%;
@@ -250,7 +261,7 @@ textarea {
     transform: rotate(3.09deg);
   }
 
-  app-home .about.about .about__main-photo.about__main-photo > img {
+  :where(app-home, app-about) .about.about .about__main-photo.about__main-photo > img {
     inset-block-start: 15.5px;
     inset-inline-start: 17.7px;
     width: calc(100% - 17.7px);
@@ -260,20 +271,20 @@ textarea {
     object-position: center 30%;
   }
 
-  app-home .about.about .about__small-photos.about__small-photos {
+  :where(app-home, app-about) .about.about .about__small-photos.about__small-photos {
     grid-template-rows: auto auto;
     gap: 8px;
     padding-block-start: 10px;
   }
 
-  app-home .about.about .about__small-photos.about__small-photos > img:first-child {
+  :where(app-home, app-about) .about.about .about__small-photos.about__small-photos > img:first-child {
     width: 100%;
     height: auto;
     aspect-ratio: 1;
     border-radius: 50%;
   }
 
-  app-home .about.about .about__small-photos.about__small-photos > img:last-child {
+  :where(app-home, app-about) .about.about .about__small-photos.about__small-photos > img:last-child {
     width: 100%;
     height: auto;
     aspect-ratio: 124.143 / 92.625;

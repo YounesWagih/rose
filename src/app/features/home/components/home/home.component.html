@@ -19,7 +19,11 @@
 
   <section class="hero home-container">
     <article class="side-offer">
-      <img class="side-offer__background" src="assets/home/side-gifts.png" alt="Red gift boxes" />
+      <img
+        class="side-offer__background"
+        src="assets/home/side-gifts.png"
+        alt="Red gift boxes"
+      />
       <div class="side-offer__copy">
         <p>START $10.99</p>
         <h1>Special Gifts Box For Your Love</h1>
@@ -43,7 +47,10 @@
         @for (banner of heroBanners; track banner; let index = $index) {
           <ng-template carouselSlide [id]="'hero-' + index">
             <div class="hero-banner__slide">
-              <img [src]="banner" [alt]="'Rose gift shop banner ' + (index + 1)" />
+              <img
+                [src]="banner"
+                [alt]="'Rose gift shop banner ' + (index + 1)"
+              />
             </div>
           </ng-template>
         }
@@ -52,8 +59,8 @@
         <p>BEST GIFT SHOP</p>
         <h2>Choose Perfect <span>Gifts</span> From Us</h2>
         <p class="hero-banner__description">
-          Culpa ducimus nesciunt aliquam non rerum esse recusandae omnis.
-          Rerum optio dolores et.
+          Culpa ducimus nesciunt aliquam non rerum esse recusandae omnis. Rerum
+          optio dolores et.
         </p>
         <a class="shop-button" href="#popular">
           Shop Now
@@ -81,7 +88,10 @@
       </div>
     </article>
     <article class="promotion promotion--flowers">
-      <img src="assets/home/promo-flowers.png" alt="Gift box held in two hands" />
+      <img
+        src="assets/home/promo-flowers.png"
+        alt="Gift box held in two hands"
+      />
       <div>
         <p>Occasion Gifts</p>
         <h2>Best Occasion Gifts Collections</h2>
@@ -98,36 +108,27 @@
     </article>
   </section>
 
-  <section class="benefits home-container">
-    <article>
-      <span><img src="assets/home/delivery.svg" alt="" /></span>
-      <div><h2>Free Delivery</h2><p>Orders Over $120</p></div>
-    </article>
-    <article>
-      <span><img src="assets/home/refund.svg" alt="" /></span>
-      <div><h2>Get Refund</h2><p>Within 30 Days Returns</p></div>
-    </article>
-    <article>
-      <span><img src="assets/home/payment.svg" alt="" /></span>
-      <div><h2>Safe Payment</h2><p>100% Secure Payment</p></div>
-    </article>
-    <article>
-      <span><img src="assets/home/support.svg" alt="" /></span>
-      <div><h2>24/7 Support</h2><p>Feel Free To Call Us</p></div>
-    </article>
-  </section>
+  <app-benefits-section />
 
   @if (errorMessage()) {
-    <p class="page-message page-message--home home-container">{{ errorMessage() }}</p>
+    <p class="page-message page-message--home home-container">
+      {{ errorMessage() }}
+    </p>
   } @else if (isLoading()) {
-    <p class="page-message page-message--home home-container">Loading products...</p>
+    <p class="page-message page-message--home home-container">
+      Loading products...
+    </p>
   } @else if (products().length === 0) {
-    <p class="page-message page-message--home home-container">No products available right now.</p>
+    <p class="page-message page-message--home home-container">
+      No products available right now.
+    </p>
   } @else {
     <section class="premium home-container">
       <div class="premium__intro">
         <p class="eyebrow">PREMIUM GIFTS</p>
-        <h2>Best <span>Seller<br />Gifts</span> And Products</h2>
+        <h2>
+          Best <span>Seller<br />Gifts</span> And Products
+        </h2>
         <p class="premium__description">
           Recusandae tempora aut laborum molestias veniam. A commodi sequi
           accusantium ullam cupiditate. Neque quidem qui et autem dolor dicta
@@ -175,7 +176,11 @@
     <section id="popular" class="popular home-container">
       <h2 class="section-title">Popular Items</h2>
       <ul class="popular__categories" aria-label="Popular product categories">
-        @for (category of categories(); track category._id; let first = $first) {
+        @for (
+          category of categories();
+          track category._id;
+          let first = $first
+        ) {
           <li [class.active]="isPopularCategoryActive(category.name, first)">
             {{ category.name }}
           </li>
@@ -187,7 +192,11 @@
         }
       </div>
       <div class="popular__products popular__products--mobile">
-        @for (product of getPopularMobileProducts(); track $index; let index = $index) {
+        @for (
+          product of getPopularMobileProducts();
+          track $index;
+          let index = $index
+        ) {
           <app-product-card
             [product]="product"
             [showNavigation]="true"
@@ -199,41 +208,7 @@
     </section>
   }
 
-  <section id="about" class="about home-container">
-    <div class="about__photos">
-      <div class="about__main-photo">
-        <img src="assets/home/about/about-main.png" alt="Purple gift box" />
-      </div>
-      <div class="about__small-photos">
-        <img src="assets/home/about/about-top.png" alt="Orange gift boxes" />
-        <img src="assets/home/about/about-bottom.png" alt="Small gift beneath balloons" />
-      </div>
-    </div>
-
-    <div class="about__content">
-      <p class="eyebrow">ABOUT US</p>
-      <h2>
-        We Provide Best And Quality <span>Gifts</span><br />
-        <span>Box</span> Product For You
-      </h2>
-      <p class="about__description">
-        Recusandae tempora aut laborum molestias veniam. A commodi sequi
-        accusantium ullam cupiditate. Neque quidem qui et autem dolor dicta
-        necessitatibus ut ad.
-      </p>
-      <a class="shop-button" href="#popular">
-        Discover More
-        <img src="assets/icons/arrow-right.svg" alt="" />
-      </a>
-
-      <div class="about__features">
-        <p><img src="assets/home/about/about-check.svg" alt="" /> Streamlined Shipping Experience</p>
-        <p><img src="assets/home/about/about-check.svg" alt="" /> Affordable Modern Design</p>
-        <p><img src="assets/home/about/about-check.svg" alt="" /> Competitive Price & Easy To Shop</p>
-        <p><img src="assets/home/about/about-check.svg" alt="" /> We Made Awesome Products</p>
-      </div>
-    </div>
-  </section>
+  <app-about-section />
 
   <section class="gallery home-container">
     <div class="gallery__heading">
@@ -241,92 +216,31 @@
       <h2 class="section-title">Let's Check Our Photo Gallery</h2>
     </div>
     <div class="gallery__grid">
-      <img src="assets/home/gallery/gallery-1.png" alt="Giving a wrapped gift" />
-      <img src="assets/home/gallery/gallery-2.png" alt="People wrapping gifts" />
-      <img src="assets/home/gallery/gallery-3.jpg" alt="Decorative gift boxes" />
-      <img class="gallery__wide" src="assets/home/gallery/gallery-4.png" alt="Family wrapping gifts" />
-      <img src="assets/home/gallery/gallery-5.png" alt="Black gift box on red background" />
+      <img
+        src="assets/home/gallery/gallery-1.png"
+        alt="Giving a wrapped gift"
+      />
+      <img
+        src="assets/home/gallery/gallery-2.png"
+        alt="People wrapping gifts"
+      />
+      <img
+        src="assets/home/gallery/gallery-3.jpg"
+        alt="Decorative gift boxes"
+      />
+      <img
+        class="gallery__wide"
+        src="assets/home/gallery/gallery-4.png"
+        alt="Family wrapping gifts"
+      />
+      <img
+        src="assets/home/gallery/gallery-5.png"
+        alt="Black gift box on red background"
+      />
     </div>
   </section>
 
-  <section class="reviews">
-    <img class="reviews__background" src="assets/home/reviews/reviews-bg.png" alt="" />
-    <div
-      class="reviews__content home-container"
-      (focusin)="pauseAutoplay(reviewsCarousel)"
-      (focusout)="resumeAutoplay(reviewsCarousel)"
-    >
-      <button class="reviews__arrow" type="button" (click)="reviewsCarousel.prev()">
-        <img src="assets/icons/chevron-left.svg" alt="Previous reviews" />
-      </button>
+  <app-reviews-section />
 
-      <owl-carousel-o
-        #reviewsCarousel
-        class="reviews__carousel"
-        [options]="reviewsCarouselOptions"
-      >
-        @for (review of reviews; track review.image) {
-          <ng-template carouselSlide [id]="'review-' + review.image">
-            <article class="review-card">
-              <div class="review-card__person">
-                <div class="review-card__avatar">
-                  <img [src]="review.image" [alt]="review.name" />
-                </div>
-                <div>
-                  <h3>{{ review.name }}</h3>
-                  <p>{{ review.role }}</p>
-                </div>
-              </div>
-              <p class="review-card__text">
-                Ab Vel Consequatur Repellat Eos Omnis Accusamus Porro Sunt
-                Dolorem. Totam Voluptas Ullam Ut. Neque Accusantium Voluptas
-                Rerum. Dolorem Veritatis Quo Omnis Nihil Nulla Harum Eum.
-                Dignissimos Laborum Necessitatibus Vero Nihil.
-              </p>
-              <div class="review-card__stars">
-                @for (star of [1, 2, 3, 4]; track star) {
-                  <img src="assets/home/reviews/review-star.svg" alt="" />
-                }
-              </div>
-              <img class="review-card__chat" src="assets/home/reviews/review-chat.svg" alt="" />
-            </article>
-          </ng-template>
-        }
-      </owl-carousel-o>
-
-      <button class="reviews__arrow" type="button" (click)="reviewsCarousel.next()">
-        <img src="assets/icons/chevron-right.svg" alt="Next reviews" />
-      </button>
-    </div>
-  </section>
-
-  <section class="trusted home-container">
-    <h2 class="section-title">Trusted By Over <span>4.5k+</span> Companies</h2>
-    <div
-      class="trusted__logos"
-      (focusin)="pauseAutoplay(trustedCarousel)"
-      (focusout)="resumeAutoplay(trustedCarousel)"
-    >
-      <owl-carousel-o
-        #trustedCarousel
-        class="trusted__carousel"
-        [options]="trustedCarouselOptions"
-      >
-        @for (company of trustedCompanies; track company) {
-          <ng-template carouselSlide [id]="'trusted-' + company">
-            <div class="trusted__logo">
-              <img
-                [src]="'assets/home/trusted/trusted-' + company + '.png'"
-                [alt]="'Trusted company ' + company"
-              />
-            </div>
-          </ng-template>
-        }
-      </owl-carousel-o>
-    </div>
-    <a class="shop-button trusted__button" routerLink="/category">
-      View All Brands
-      <img src="assets/icons/arrow-right.svg" alt="" />
-    </a>
-  </section>
+  <app-trusted-section />
 </div>
