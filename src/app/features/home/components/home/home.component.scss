@@ -7,17 +7,16 @@
 }
 
 .categories {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  justify-content: space-between;
   gap: 24px;
 }
 
 .category-card {
   display: flex;
   align-items: center;
-  gap: 14px;
-  min-width: 0;
-  min-height: 122px;
+  flex: 0 0 auto;
+  gap: 16px;
   border-radius: 20px;
   background: var(--color-soft-pink);
   color: inherit;
@@ -28,38 +27,34 @@
 .category-card__image {
   display: grid;
   flex: 0 0 90px;
-  width: 90px;
   height: 90px;
   place-items: center;
   overflow: hidden;
   border-radius: 50%;
-  background: var(--color-white);
+  background: var(--color-primary);
+  box-shadow: 0 0 40px 5px rgb(0 0 0 / 5%);
 }
 
 .category-card__image img {
-  width: 66px;
-  height: 66px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
 }
 
 .category-card h2 {
-  overflow: hidden;
   margin: 0;
-  font-size: 17px;
-  font-weight: 500;
-  text-overflow: ellipsis;
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 21.6px;
   text-transform: capitalize;
-  white-space: nowrap;
-}
-
-.category-card__text {
-  min-width: 0;
 }
 
 .category-card__text p {
-  margin: 4px 0 0;
+  margin: 0;
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 28.8px;
 }
 
 .hero {

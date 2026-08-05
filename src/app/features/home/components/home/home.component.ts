@@ -9,10 +9,13 @@ import {
 import { ProductService } from '../../../../core/services/product.service';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
 import { Product } from '../../../../shared/models/product.model';
-import { Category } from '../../../category/models/category.model';
 import { CategoryService } from '../../../category/services/category.service';
 import { forkJoin } from 'rxjs';
 import { RouterLink } from '@angular/router';
+import {
+  adaptCategoryToCard,
+  CategoryCard,
+} from '../../adapters/category-card.adapter';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private categoryService = inject(CategoryService);
   private productService = inject(ProductService);
 
-  categories = signal<Category[]>([]);
+  categories = signal<CategoryCard[]>([]);
   products = signal<Product[]>([]);
   isLoading = signal(true);
   errorMessage = signal('');
@@ -74,7 +77,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       products: this.productService.getProducts(),
     }).subscribe({
       next: ({ categories, products }) => {
-        this.categories.set(categories.categories.slice(0, 5));
+        this.categories.set(
+          categories.categories.slice(0, 5).map(adaptCategoryToCard),
+        );
         this.products.set(products.products);
         this.isLoading.set(false);
       },
