@@ -4,10 +4,11 @@ import { HeaderComponent } from './core/components/header/header.component';
 import { FooterComponent } from './core/components/footer/footer.component';
 import { LoginPopupComponent } from './features/auth/components/login-popup/login-popup.component';
 import { LoginPopupService } from './features/auth/services/login-popup.service';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-root',
-  imports: [FooterComponent, HeaderComponent, LoginPopupComponent, RouterOutlet],
+  imports: [FooterComponent, HeaderComponent, LoginPopupComponent, RouterOutlet, SpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
